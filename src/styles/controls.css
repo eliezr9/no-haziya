@@ -1,0 +1,98 @@
+/* Main button and news switch — design/Screen.dc.html lines 371–397. */
+
+.main-btn {
+  inline-size: 100%;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: 3.5px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  box-shadow: 0 5px 0 var(--btn-shadow);
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+/* Tactile press: the button sinks onto its shadow. */
+.main-btn:active:not([aria-disabled='true']) {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--btn-shadow);
+}
+
+.main-btn[aria-disabled='true'] {
+  cursor: not-allowed;
+}
+
+/* No location yet: dimmed (checking keeps full color, like the design) */
+.main-btn.is-empty {
+  opacity: 0.45;
+}
+
+.spinner {
+  flex-shrink: 0;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.switch {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 8px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.switch[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Knob sits at the inline start when off and moves to the inline end when on,
+   so it mirrors naturally between Hebrew (RTL) and English (LTR). */
+.switch-track {
+  inline-size: 54px;
+  block-size: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 3px;
+  border-radius: 16px;
+  border: 2.5px solid var(--btn-border);
+  background: var(--switch-off);
+  box-shadow: 0 3px 0 var(--btn-shadow);
+  transition: background 0.2s;
+}
+
+.switch[aria-checked='true'] .switch-track {
+  justify-content: flex-end;
+  background: var(--switch-on);
+}
+
+.switch-knob {
+  inline-size: 22px;
+  block-size: 22px;
+  border-radius: 11px;
+  border: 2.5px solid var(--btn-border);
+  background: var(--switch-knob);
+}

@@ -41,8 +41,6 @@
           <p id="loc-message" class="dropdown-message" hidden></p>
           <ul id="loc-listbox" role="listbox" data-i18n-aria-label="suggestionsLabel"></ul>
         </div>
-
-        <p id="loc-status" class="visually-hidden" role="status"></p>
       </header>
 
       <h1 class="title" dir="ltr" data-i18n="title"></h1>
@@ -61,8 +59,19 @@
         <div id="scene-panel" class="panel" hidden></div>
       </div>
 
+      <button type="button" id="check-btn" class="main-btn" aria-disabled="true">
+        <svg class="spinner" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true" hidden><path d="M12 3a9 9 0 1 1-9 9" /></svg>
+        <span id="check-btn-label"></span>
+      </button>
+
+      <button type="button" id="news-switch" class="switch" role="switch" aria-checked="false" aria-disabled="true">
+        <span data-i18n="newsSwitch"></span>
+        <span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span>
+      </button>
+
       <p class="disclaimer" data-i18n="disclaimer"></p>
     </main>
+    <p id="live" class="visually-hidden" role="status"></p>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

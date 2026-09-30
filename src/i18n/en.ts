@@ -25,4 +25,8 @@ export const en: Strings = {
   chosen: 'Selected: {name}',
   changeLocation: 'Change location',
   chooseLocation: 'Choose a location',
+
+  checkButton: 'Can I take it off tonight?',
+  checking: 'Checking tonight…',
+  newsSwitch: 'Also consider the news',
 };

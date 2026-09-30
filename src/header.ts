@@ -1,6 +1,7 @@
 // Header row: location chip / search combobox + language toggle (SPEC §2 states 1, 1a, 2, 2b).
 // The search follows the ARIA 1.2 combobox pattern: focus stays in the input, arrows move
 // aria-activedescendant through the options, Enter picks, Escape closes.
+import { announce } from './announce';
 import { format, otherLang, strings } from './i18n';
 import { loadLocalities, nearest, type Locality } from './search/localities';
 import { buildIndex, search, type Match, type SearchIndex } from './search/match';
@@ -21,7 +22,6 @@ export function initHeader(store: Store): void {
   const dropdown = byId('loc-dropdown');
   const message = byId('loc-message');
   const listbox = byId('loc-listbox');
-  const status = byId('loc-status');
   const langToggle = byId<HTMLButtonElement>('lang-toggle');
 
   let searching = false; // 2b: the chip has turned into the search box
@@ -30,11 +30,12 @@ export function initHeader(store: Store): void {
   let index: SearchIndex | undefined;
   let loadFailed = false;
   let matches: Match[] = [];
-  let active = 0; // option index; matches.length is the GPS option
+  // Option index; matches.length is the GPS option. -1 = nothing pre-selected, so Enter
+  // with no matches (or before the list loads) doesn't fire a GPS permission prompt.
+  let active = -1;
   let gpsNote: 'locating' | 'locateFailed' | 'noneNearby' | undefined;
 
   const t = () => strings[store.get().lang];
-  const announce = (text: string) => (status.textContent = text);
 
   function ensureLoaded(): void {
     if (localities || !open) return;
@@ -54,7 +55,7 @@ export function initHeader(store: Store): void {
 
   function refresh(): void {
     matches = index ? search(index, input.value) : [];
-    active = 0;
+    active = matches.length > 0 ? 0 : -1;
     render();
   }
 
@@ -129,8 +130,8 @@ export function initHeader(store: Store): void {
 
     dropdown.hidden = !open;
     input.setAttribute('aria-expanded', String(open));
-    if (open) {
-      renderOptions();
+    if (open) renderOptions();
+    if (open && active >= 0) {
       input.setAttribute('aria-activedescendant', active < matches.length ? `loc-opt-${active}` : 'loc-opt-gps');
     } else {
       input.removeAttribute('aria-activedescendant');
@@ -158,8 +159,9 @@ export function initHeader(store: Store): void {
     open = false;
     searching = false;
     input.value = '';
-    // set() re-renders via the subscription below, so the chip exists before we focus it
-    store.set({ location: { id: loc.id, he: loc.he, en: loc.en } });
+    // A new city resets any result (SPEC 2b). set() re-renders via the subscription below,
+    // so the chip exists before we focus it.
+    store.set({ location: { id: loc.id, he: loc.he, en: loc.en }, step: 'idle' });
     chip.focus();
     announce(format(strings[lang].chosen, { name: loc[lang] }));
   }
@@ -203,7 +205,7 @@ export function initHeader(store: Store): void {
 
   function move(delta: number): void {
     const count = matches.length + 1;
-    active = (active + delta + count) % count;
+    active = active < 0 ? (delta > 0 ? 0 : count - 1) : (active + delta + count) % count;
     render();
     byId(input.getAttribute('aria-activedescendant') ?? '')?.scrollIntoView({ block: 'nearest' });
   }
@@ -240,7 +242,7 @@ export function initHeader(store: Store): void {
       case 'Enter':
         if (open) {
           e.preventDefault();
-          pick(active);
+          if (active >= 0) pick(active);
         }
         break;
       case 'Escape':

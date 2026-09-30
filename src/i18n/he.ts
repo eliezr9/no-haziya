@@ -25,6 +25,11 @@ export const he = {
   chosen: 'נבחר: {name}',
   changeLocation: 'שינוי מיקום',
   chooseLocation: 'נא לבחור מיקום',
+
+  // Main button + news switch
+  checkButton: 'אפשר לשחרר הלילה?',
+  checking: 'בודקים את הלילה…',
+  newsSwitch: 'להתחשב גם בחדשות',
 };
 
 export type Strings = typeof he;

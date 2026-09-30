@@ -1,9 +1,15 @@
 import type { Lang } from './i18n';
 import type { ChosenLocality } from './search/localities';
 
+/** With no location the screen is "empty" (SPEC state 1) whatever the step says. */
+export type Step = 'idle' | 'checking';
+
 export interface AppState {
   lang: Lang;
   location: ChosenLocality | null;
+  step: Step;
+  /** News switch — not saved; only the city and language are stored locally. */
+  news: boolean;
 }
 
 type Listener = (state: AppState, prev: AppState) => void;

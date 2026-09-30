@@ -5,7 +5,9 @@ import '@fontsource/rubik-mono-one/400.css';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/header.css';
+import './styles/controls.css';
 
+import { initControls } from './controls';
 import { initHeader } from './header';
 import { detectLang, dir, strings, type Lang, type Strings } from './i18n';
 import { createStore, parseSavedLocation, type Store } from './state';
@@ -43,6 +45,8 @@ function initScene(store: Store): void {
 const store = createStore({
   lang: detectLang(load('nh.lang'), Intl.DateTimeFormat().resolvedOptions().timeZone),
   location: parseSavedLocation(load('nh.location')),
+  step: 'idle',
+  news: false,
 });
 
 store.subscribe((state, prev) => {
@@ -55,4 +59,5 @@ store.subscribe((state, prev) => {
 
 applyLang(store.get().lang);
 initHeader(store);
+initControls(store);
 initScene(store);
