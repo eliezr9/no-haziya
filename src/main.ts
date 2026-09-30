@@ -8,6 +8,7 @@ import './styles/header.css';
 import './styles/controls.css';
 
 import { initControls } from './controls';
+import { initFrame } from './frame';
 import { initHeader } from './header';
 import { detectLang, dir, strings, type Lang, type Strings } from './i18n';
 import { createStore, parseSavedLocation, type Store } from './state';
@@ -36,7 +37,7 @@ function initScene(store: Store): void {
   const render = () => {
     const hasLocation = store.get().location !== null;
     pinPanel.hidden = hasLocation;
-    scenePanel.hidden = !hasLocation;
+    scenePanel.toggleAttribute('hidden', !hasLocation);
   };
   store.subscribe(render);
   render();
@@ -58,6 +59,7 @@ store.subscribe((state, prev) => {
 });
 
 applyLang(store.get().lang);
+initFrame(document.getElementById('app')!);
 initHeader(store);
 initControls(store);
 initScene(store);

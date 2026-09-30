@@ -55,8 +55,11 @@
           </svg>
           <span data-i18n="chooseLocation"></span>
         </label>
-        <!-- Illustration comes in a later step. -->
-        <div id="scene-panel" class="panel" hidden></div>
+        <!-- Same 326×440 viewBox as the design's scene; the illustration comes in a later step. -->
+        <svg id="scene-panel" class="scene-svg" viewBox="0 0 326 440" aria-hidden="true" hidden>
+          <rect class="scene-bg" x="10" y="40" width="306" height="390" rx="24" />
+          <rect class="scene-border" x="10" y="40" width="306" height="390" rx="24" />
+        </svg>
       </div>
 
       <button type="button" id="check-btn" class="main-btn" aria-disabled="true">

@@ -7,10 +7,10 @@ screenshots) for review before starting the next. Details live in SPEC.md and de
 - [x] Project setup: Vite + TypeScript + Vitest, fonts, design tokens, RTL shell
 - [x] Header: location chip, smart search (SPEC §7), GPS, language toggle
 - [x] Main button (idle / disabled / checking ≥1.2s) and news switch (UI only)
+- [x] Poster frame: wavy border (redrawn per screen size), spacing matched to design/screens at 390×844
 - [x] Preview hosting: https://no-haziya.pages.dev (Cloudflare Pages, auto-deploys on push to main)
 
 ## Next
-1. [ ] **Poster frame** — wavy inner border, final spacing vs. `design/screens/`
 2. [ ] **Result card + data contract**
    - define `scores.json` (per area: score, band, reason, `updatedAt`) + sample file
    - result card (number counts up, band, headline, reason, "check again")
