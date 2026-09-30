@@ -98,7 +98,7 @@ Inputs per alert area:
 - **News toggle (optional)**: headlines from a few Israeli news feeds every 15–30 min, rated 0–10 for "tension" by an LLM (free tier); **capped at ~20 points** of the total.
 
 Rules:
-- **Active alert right now → skip the verdict** and show "Go to the shelter".
+- **No special active-alert mode**: the site never gives safety instructions (official apps do that). During an alert it shows the regular statistics-based answer, which may be wrong.
 - Bands: `0–30` low, `31–65` medium, `66–100` high. Weights to be tuned with real historical data.
 
 ## 7. Location search
