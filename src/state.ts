@@ -2,14 +2,15 @@ import type { Outcome } from './check';
 import type { Lang } from './i18n';
 import type { ChosenLocality } from './search/localities';
 
-/** With no location the screen is "empty" (SPEC state 1) whatever the step says. */
-export type Step = 'idle' | 'checking' | 'result';
+/** With no location the screen is "empty" (SPEC state 1) whatever the step says.
+ *  'revealing': the answer is in and the scene plays the walk to bed; the card waits. */
+export type Step = 'idle' | 'checking' | 'revealing' | 'result';
 
 export interface AppState {
   lang: Lang;
   location: ChosenLocality | null;
   step: Step;
-  /** Set when step is 'result'. */
+  /** Set when step is 'revealing' or 'result'. */
   outcome: Outcome | null;
   /** News switch — not saved; only the city and language are stored locally. */
   news: boolean;

@@ -13,21 +13,24 @@ screenshots) for review before starting the next. Details live in SPEC.md and de
 - [x] Preview hosting: https://no-haziya.pages.dev (Cloudflare Pages, auto-deploys on push to main)
 - [x] Scene, still frames — `src/scene/` (markup ported from `design/Screen.dc.html`, variant a):
       standing/thinking, checking dots, high / medium / low poses, moon, Iron Dome, news glow + bubble
+- [x] Animation (design/ANIMATIONS.md): loops (§A) as CSS keyframes in `styles/scene.css`; transitions (§B):
+      new step 'revealing' plays the walk to bed (per-risk: sob + tear / sigh + bra drop + arm flop /
+      bra throw + Zzz), moon snaps, then the card pops in — timings in `src/scene/timeline.ts`
 
 ## Next
-1. [ ] **Animation** — loops (§A) done as CSS keyframes in `styles/scene.css`, plus the low-risk
-       bra throw (arc + spin, trail draws in, then floats; sparkles twinkle); still to do:
-       transitions (ANIMATIONS.md §B) — walk to bed, per-risk sequences, moon snap
-2. [ ] **Fetcher (Raspberry Pi)** — verify Pikud HaOref endpoints, scoring (SPEC §6),
+1. [ ] **Fetcher (Raspberry Pi)** — verify Pikud HaOref endpoints, scoring (SPEC §6),
        publish `scores.json` to the site (replaces the sample file; format documented in src/scores.ts)
-3. [ ] **News rating** (optional, SPEC §6) — or ship v1 without it
-4. [ ] **Polish** — accessibility audit, Lighthouse, share/OG image, final subdomain
+2. [ ] **News rating** (optional, SPEC §6) — or ship v1 without it
+3. [ ] **Polish** — accessibility audit, Lighthouse, share/OG image, final subdomain
 
 ## Decided
 - **Active alert:** no special mode and no safety instructions; show the regular statistics-based answer (SPEC §6).
 - **No data / couldn't check:** the scene keeps the idle standing girl.
 
 ## Open decisions
+- **Walk to bed (not in the design):** the bed and nightstand snap in as the thought bubble pops, and
+  she walks three steps right, in front of the bed. Flipping the news switch mid-walk skips to the new pose.
+  Needs a design review.
 - **Very old data:** today a stale file still shows its last score plus "updated X ago". Should the
   verdict be hidden after some age (e.g. 6 hours, when the Pi is clearly down)?
 - How the Pi uploads `scores.json` to the host (git push / Cloudflare R2 / KV).

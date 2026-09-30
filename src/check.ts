@@ -4,7 +4,7 @@ import { loadScores, type AreaScore } from './scores';
 /** SPEC §2 state 3: "checking" stays up at least this long, even if the answer is instant. */
 export const MIN_CHECKING_MS = 1200;
 
-const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+export const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 /** Resolves with `work`'s value, but never sooner than `ms`. */
 export async function withMinDuration<T>(work: Promise<T>, ms: number): Promise<T> {

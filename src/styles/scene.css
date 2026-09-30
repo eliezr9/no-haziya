@@ -13,6 +13,7 @@
 
 .scene-svg[data-state='idle'] [data-when~='idle'],
 .scene-svg[data-state='checking'] [data-when~='checking'],
+.scene-svg[data-state='going'] [data-when~='going'],
 .scene-svg[data-state='high'] [data-when~='high'],
 .scene-svg[data-state='medium'] [data-when~='medium'],
 .scene-svg[data-state='low'] [data-when~='low'] {
@@ -133,7 +134,7 @@
 
 .scene-svg[data-state='high'] #truck,
 .scene-svg[data-state='medium'] #truck {
-  animation: truck-in 1.8s cubic-bezier(0.2, 0, 0.2, 1) backwards;
+  animation: truck-in 1.8s cubic-bezier(0.2, 0, 0.2, 1) 0.3s backwards;
 }
 
 @keyframes truck-in {
@@ -142,7 +143,7 @@
 
 /* 5 · Medium: radar dish spins once the truck has stopped */
 .scene-svg[data-state='medium'] #radar-dish {
-  animation: radar-spin 2.4s linear 1.8s infinite;
+  animation: radar-spin 2.4s linear 2.1s infinite;
 }
 
 @keyframes radar-spin {
@@ -158,7 +159,7 @@
 }
 
 .scene-svg[data-state='high'] #launch-puff {
-  animation: launch-puff 5s linear 2.2s infinite;
+  animation: launch-puff 5s linear 2.5s infinite;
 }
 
 @keyframes launch-puff {
@@ -172,7 +173,7 @@
 }
 
 .scene-svg[data-state='high'] #missile {
-  animation: missile-fly 5s linear 2.2s infinite;
+  animation: missile-fly 5s linear 2.5s infinite;
 }
 
 @keyframes missile-fly {
@@ -206,20 +207,20 @@
 
 .scene-svg[data-state='low'] #bra-flying {
   animation:
-    bra-throw 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) 0.3s backwards,
-    bra-float 2.4s ease-in-out 1.2s infinite;
+    bra-throw 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) backwards,
+    bra-float 2.4s ease-in-out 0.9s infinite;
 }
 
 .scene-svg[data-state='low'] #bra-trail-reveal {
-  animation: trail-draw 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) 0.3s backwards;
+  animation: trail-draw 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
 }
 
 .scene-svg[data-state='low'] #sparkles path {
-  animation: sparkle-twinkle 1.4s linear 1.1s infinite;
+  animation: sparkle-twinkle 1.4s linear 0.8s infinite;
 }
 
 .scene-svg[data-state='low'] #sparkles #sparkle-small {
-  animation-delay: 1.6s;
+  animation-delay: 1.3s;
 }
 
 @keyframes bra-throw {
@@ -238,6 +239,288 @@
 
 @keyframes sparkle-twinkle {
   50% { opacity: 0.4; transform: scale(0.5); }
+}
+
+/* Transitions — design/ANIMATIONS.md §B.
+   'going' is the walk to bed once the answer is in (data-band says which answer). Its delays
+   count from the answer and must match LIE_DOWN_MS in scene/timeline.ts, where scene.ts
+   switches to the band state. Poses snap (steps) for the cutout feel. */
+
+/* Thought bubble (dots and all) and the ghost pop away */
+#thought,
+#ghost,
+#sigh-standing circle,
+#sighs circle,
+.zz text {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scene-svg[data-state='going'] #thought {
+  animation: pop-out 0.15s ease-in forwards;
+}
+
+.scene-svg[data-state='going'] #ghost {
+  animation: pop-out 0.15s ease-in 0.05s forwards;
+}
+
+@keyframes pop-out {
+  40% { transform: scale(1.12); }
+  100% { transform: scale(0); }
+}
+
+/* She looks toward the bed and walks there: three steps, two poses each, legs swinging */
+.scene-svg[data-state='going'] #pupils {
+  animation: look-bed 0.1s steps(1, end) forwards;
+}
+
+@keyframes look-bed {
+  to { transform: translate(3px, 1px); }
+}
+
+#girl-legs {
+  transform-origin: 120px 350px;
+}
+
+.scene-svg[data-state='going'] #girl {
+  animation: walk 0.6s steps(1, end) 0.15s forwards;
+}
+
+/* the shadow stays on the floor: it slides along but doesn't bob or hop */
+.scene-svg[data-state='going'] #girl-shadow {
+  animation: walk-shadow 0.6s steps(6, end) 0.15s forwards;
+}
+
+@keyframes walk-shadow {
+  to { transform: translate(42px, 0); }
+}
+
+.scene-svg[data-state='going'] #girl-legs {
+  animation: step-legs 0.6s steps(1, end) 0.15s forwards;
+}
+
+@keyframes walk {
+  0% { transform: translate(0, 0); }
+  16.667% { transform: translate(7px, -5px); }
+  33.333% { transform: translate(14px, 0); }
+  50% { transform: translate(21px, -5px); }
+  66.667% { transform: translate(28px, 0); }
+  83.333% { transform: translate(35px, -5px); }
+  100% { transform: translate(42px, 0); }
+}
+
+@keyframes step-legs {
+  0%, 33.333%, 66.667%, 100% { transform: none; }
+  16.667%, 83.333% { transform: skewX(-10deg); }
+  50% { transform: skewX(10deg); }
+}
+
+/* …and hops into bed (high: right away; medium: after dropping the bra) */
+.scene-svg[data-state='going'][data-band='high'] #girl {
+  animation:
+    walk 0.6s steps(1, end) 0.15s forwards,
+    hop 0.15s ease-out 0.75s forwards;
+}
+
+.scene-svg[data-state='going'][data-band='medium'] #girl {
+  animation:
+    walk 0.6s steps(1, end) 0.15s forwards,
+    hop 0.15s ease-out 1.8s forwards;
+}
+
+@keyframes hop {
+  from { transform: translate(42px, 0); }
+  to { transform: translate(42px, -26px); }
+}
+
+/* Medium: a relieved sigh — breath in, shoulders drop, sigh bubbles rise */
+#sigh-standing circle {
+  opacity: 0;
+}
+
+.scene-svg[data-state='going'][data-band='medium'] #girl-upper {
+  animation: sigh 0.3s steps(1, end) 0.8s forwards;
+}
+
+@keyframes sigh {
+  from { transform: translate(0, -2px); }
+  to { transform: translate(0, 4px); }
+}
+
+.scene-svg[data-state='going'][data-band='medium'] #sigh-standing circle {
+  animation: sigh-rise 0.45s ease-out 0.85s forwards;
+}
+
+.scene-svg[data-state='going'][data-band='medium'] #sigh-standing circle:nth-child(2) {
+  animation-delay: 0.91s;
+}
+
+.scene-svg[data-state='going'][data-band='medium'] #sigh-standing circle:nth-child(3) {
+  animation-delay: 0.97s;
+}
+
+@keyframes sigh-rise {
+  0% { opacity: 0; transform: scale(0.3); }
+  25% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: translate(6px, -16px); }
+}
+
+/* Medium + low: the hand goes into the shirt and pulls the bra out */
+#arm-reach,
+#bra-held,
+#bra-drop {
+  opacity: 0;
+}
+
+.scene-svg[data-state='going'][data-band='low'] :is(#arm-up, #hand-chin) {
+  animation: hide 0.01s 0.8s forwards;
+}
+
+.scene-svg[data-state='going'][data-band='low'] #arm-reach {
+  animation: show 0.01s 0.8s forwards;
+}
+
+.scene-svg[data-state='going'][data-band='medium'] :is(#arm-up, #hand-chin) {
+  animation: hide 0.01s 1.2s forwards;
+}
+
+.scene-svg[data-state='going'][data-band='medium'] #arm-reach {
+  animation: show 0.01s 1.2s forwards;
+}
+
+@keyframes hide {
+  to { opacity: 0; }
+}
+
+@keyframes show {
+  to { opacity: 1; }
+}
+
+/* Low: she holds it up at her chest, ready to throw; she flops into bed as it flies
+   (bra-throw starts from this pose) */
+#bra-held {
+  transform: translate(160px, 292px) rotate(20deg) scale(0.7);
+}
+
+.scene-svg[data-state='going'][data-band='low'] #bra-held {
+  animation: bra-pull 0.25s steps(2, end) 0.95s forwards;
+}
+
+@keyframes bra-pull {
+  from { opacity: 1; transform: translate(158px, 304px) rotate(-10deg) scale(0.7); }
+  to { opacity: 1; transform: translate(160px, 292px) rotate(20deg) scale(0.7); }
+}
+
+/* Medium: she lets it drop to the floor beside the bed, where #bra-floor lies */
+#bra-drop {
+  transform: translate(92px, 368px) rotate(-6deg);
+}
+
+.scene-svg[data-state='going'][data-band='medium'] #bra-drop {
+  animation: bra-drop 0.45s 1.35s forwards;
+}
+
+@keyframes bra-drop {
+  0% { opacity: 1; transform: translate(154px, 296px) rotate(12deg); animation-timing-function: steps(1, end); }
+  33% { opacity: 1; transform: translate(154px, 296px) rotate(12deg); animation-timing-function: ease-in; }
+  70% { opacity: 1; transform: translate(118px, 334px) rotate(-30deg); }
+  100% { opacity: 1; transform: translate(92px, 368px) rotate(-6deg); }
+}
+
+/* Lying down (every band): she lands with a bump, the blanket snaps over her in one frame.
+   The moon's new face is just the state switch — a snap, no morph. */
+.scene-svg:is([data-state='high'], [data-state='medium'], [data-state='low']) #lying {
+  animation: land 0.16s steps(2, end) backwards;
+}
+
+@keyframes land {
+  from { transform: translate(0, -10px); }
+}
+
+.scene-svg:is([data-state='high'], [data-state='medium'], [data-state='low']) #blanket {
+  animation: snap-in 0.1s steps(1, end) backwards;
+}
+
+/* holds the part hidden for the whole duration, then it snaps in */
+@keyframes snap-in {
+  from { opacity: 0; }
+}
+
+@keyframes pop-in {
+  from { transform: scale(0); }
+}
+
+/* 4 · High: the tear runs down, and her head bobs with three sobs */
+#tear {
+  stroke-dasharray: 100 100;
+}
+
+.scene-svg[data-state='high'] :is(#head-lying, #face-high, #freckles-lying, #eye-crying, #high .tired) {
+  animation: sob 0.45s steps(1, end) 0.35s;
+}
+
+.scene-svg[data-state='high'] #tear {
+  animation:
+    tear-run 0.4s ease-in 0.25s backwards,
+    sob 0.45s steps(1, end) 0.35s;
+}
+
+@keyframes sob {
+  0%, 33.333%, 66.667% { transform: translate(0, -3px); }
+  16.667%, 50%, 83.333%, 100% { transform: none; }
+}
+
+@keyframes tear-run {
+  from { stroke-dashoffset: 100; }
+}
+
+/* 5 · Medium: the eye droops half-closed, the arm flops over the edge, sighs rise */
+.scene-svg[data-state='medium'] .lid {
+  animation: snap-in 0.3s steps(1, end) backwards;
+}
+
+#arm-dangle {
+  transform-origin: 112px 304px;
+}
+
+.scene-svg[data-state='medium'] #arm-dangle {
+  animation: arm-flop 0.3s 0.3s backwards;
+}
+
+@keyframes arm-flop {
+  0% { transform: rotate(-75deg); animation-timing-function: ease-in; }
+  60% { transform: rotate(8deg); animation-timing-function: ease-out; }
+  80% { transform: rotate(-4deg); }
+  100% { transform: none; }
+}
+
+.scene-svg[data-state='medium'] #sighs circle {
+  animation: pop-in 0.12s ease-out 0.45s backwards;
+}
+
+.scene-svg[data-state='medium'] #sighs circle:nth-child(2) {
+  animation-delay: 0.55s;
+}
+
+.scene-svg[data-state='medium'] #sighs circle:nth-child(3) {
+  animation-delay: 0.65s;
+}
+
+/* 6 · Low: "Zzz" letters pop in one by one; the moon dozes off with its own "z z" */
+.scene-svg[data-state='low'] .zz text {
+  animation: pop-in 0.12s steps(2, end) 0.35s backwards;
+}
+
+.scene-svg[data-state='low'] :is(#zzz, #moon-z) text:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.scene-svg[data-state='low'] #zzz text:nth-child(3) {
+  animation-delay: 0.65s;
+}
+
+.scene-svg[data-state='low'] #moon-z text:first-child {
+  animation-delay: 0.2s;
 }
 
 /* Fills */

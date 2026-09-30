@@ -2,10 +2,13 @@
 // Buttons use aria-disabled rather than `disabled`, so they stay focusable; focus is handed
 // between the main button and "check again" as one replaces the other.
 import { announce } from './announce';
-import { checkRisk, MIN_CHECKING_MS, withMinDuration } from './check';
+import { checkRisk, delay, MIN_CHECKING_MS, withMinDuration } from './check';
 import { strings } from './i18n';
 import { summaryText } from './resultText';
+import { revealMs } from './scene/timeline';
 import type { Store } from './state';
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 export function initControls(store: Store): void {
   const button = document.getElementById('check-btn') as HTMLButtonElement;
@@ -27,6 +30,14 @@ export function initControls(store: Store): void {
 
     const outcome = await withMinDuration(checkRisk(location), MIN_CHECKING_MS);
     if (id !== run || store.get().step !== 'checking') return; // city changed meanwhile
+
+    // The scene walks her to bed first (ANIMATIONS.md §B); the card pops in once it settles.
+    const reveal = reducedMotion.matches ? 0 : revealMs(outcome, store.get().news);
+    if (reveal > 0) {
+      store.set({ step: 'revealing', outcome });
+      await delay(reveal);
+      if (id !== run || store.get().step !== 'revealing') return;
+    }
 
     const fromButton = document.activeElement === button;
     store.set({ step: 'result', outcome });
@@ -51,7 +62,7 @@ export function initControls(store: Store): void {
   function render(): void {
     const { lang, location, step, news } = store.get();
     const t = strings[lang];
-    const checking = location !== null && step === 'checking';
+    const checking = location !== null && (step === 'checking' || step === 'revealing');
 
     button.hidden = location !== null && step === 'result'; // the result card takes its place
     button.setAttribute('aria-disabled', String(!location || checking));
