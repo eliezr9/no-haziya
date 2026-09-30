@@ -1,0 +1,44 @@
+/* Design tokens — SPEC.md §3. The only place raw colors may appear. */
+:root {
+  --frame: #c8562b;
+  --body: #f2e3c6;
+  --wave: #f4a259;
+  --title: #c8562b;
+  --subtitle: #1f4a5a;
+  --btn-bg: #1f4a5a;
+  --btn-text: #f2e3c6;
+  --ink: #3b2418;
+  --scene: #1f4a5a;
+  --risk-high: #b8401c;
+  --risk-med: #9a5a1e;
+  --risk-low: #1f6a5a;
+
+  /* Character palette (same in both themes) */
+  --skin: #f4c7a0;
+  --hair: #c8562b;
+  --pajamas: #7fb7be;
+  --pajamas-bra: #5a979f;
+  --blanket: #d9534f;
+  --bra: #e8a0a0;
+  --wood: #b5733d;
+  --battery: #8f9a5a;
+
+  --font-display: 'Rubik Mono One', system-ui, sans-serif;
+  --font-ui: 'Rubik', system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --frame: #8f3a1c;
+    --body: #211a16;
+    --wave: #8a4a26;
+    --title: #e8743f;
+    --subtitle: #7fb7be;
+    --btn-bg: #f4a259;
+    --btn-text: #211a16;
+    --ink: #120c09;
+    --risk-high: #ff8a5c;
+    --risk-med: #f4c06a;
+    --risk-low: #8fd3d0;
+  }
+}

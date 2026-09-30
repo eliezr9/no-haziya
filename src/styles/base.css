@@ -1,0 +1,71 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--frame);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  line-height: 1.4;
+}
+
+/* Mobile-first: full-bleed poster on phones, centered card on wider screens. */
+.poster {
+  min-height: 100dvh;
+  padding-block: 24px;
+  padding-inline: 16px;
+  background: var(--body);
+  text-align: center;
+}
+
+@media (min-width: 480px) {
+  body {
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+
+  .poster {
+    min-height: auto;
+    inline-size: 100%;
+    max-inline-size: 420px;
+    border-radius: 24px;
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 11vw, 2.75rem);
+  color: var(--title);
+}
+
+.subtitle {
+  margin-block: 4px 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--subtitle);
+}
+
+.disclaimer {
+  margin-block-start: 24px;
+  font-size: 0.8125rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
