@@ -108,22 +108,6 @@ body {
   max-inline-size: clamp(240px, (100dvh - 434px) * 0.74, 304px);
 }
 
-.scene-svg {
-  display: block;
-  inline-size: 100%;
-  block-size: auto;
-}
-
-.scene-bg {
-  fill: var(--scene);
-}
-
-.scene-border {
-  fill: none;
-  stroke: var(--panel-stroke);
-  stroke-width: 3.5;
-}
-
 .panel {
   inline-size: 100%;
   aspect-ratio: 304 / 410;

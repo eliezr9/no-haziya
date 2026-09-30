@@ -28,6 +28,14 @@ export const he = {
   changeLocation: 'שינוי מיקום',
   chooseLocation: 'נא לבחור מיקום',
 
+  // Scene (aria-label of the illustration) + news bubble
+  sceneIdle: 'בחורה בפיג׳מה חושבת על המיטה',
+  sceneChecking: 'בחורה בפיג׳מה חושבת, הבדיקה רצה',
+  sceneHigh: 'הבחורה שוכבת במיטה ובוכה, עם חזייה מתחת לפיג׳מה',
+  sceneMedium: 'הבחורה שוכבת במיטה ונושמת לרווחה, החזייה על הרצפה',
+  sceneLow: 'הבחורה ישנה מחויכת, החזייה עפה באוויר',
+  newsBlah: 'בלה בלה…',
+
   // Main button + news switch
   checkButton: 'אפשר לשחרר הלילה?',
   checking: 'בודקים את הלילה…',

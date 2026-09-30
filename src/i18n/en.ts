@@ -28,7 +28,14 @@ export const en: Strings = {
   changeLocation: 'Change location',
   chooseLocation: 'Choose a location',
 
-  checkButton: 'Can I take it off tonight?',
+  sceneIdle: 'A girl in pajamas thinking about bed',
+  sceneChecking: 'A girl in pajamas thinking while the check runs',
+  sceneHigh: 'The girl lies in bed crying, bra still under her pajamas',
+  sceneMedium: 'The girl lies in bed with a sigh of relief, bra on the floor',
+  sceneLow: 'The girl sleeps smiling, her bra flying through the air',
+  newsBlah: 'Blah blah…',
+
+  checkButton:'Can I take it off tonight?',
   checking: 'Checking tonight…',
   newsSwitch: 'Also consider the news',
 

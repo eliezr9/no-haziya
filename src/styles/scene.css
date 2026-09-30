@@ -1,0 +1,71 @@
+/* Scene illustration (src/scene/markup.ts). */
+.scene-svg {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+/* Parts show only in the states listed in their data-when (set by scene.ts). */
+.scene-svg [data-when],
+.scene-svg:not([data-news]) .news {
+  display: none;
+}
+
+.scene-svg[data-state='idle'] [data-when~='idle'],
+.scene-svg[data-state='checking'] [data-when~='checking'],
+.scene-svg[data-state='high'] [data-when~='high'],
+.scene-svg[data-state='medium'] [data-when~='medium'],
+.scene-svg[data-state='low'] [data-when~='low'] {
+  display: inline;
+}
+
+.panel-border {
+  fill: none;
+  stroke: var(--panel-stroke);
+  stroke-width: 3.5;
+}
+
+.zz {
+  font-family: var(--font-display);
+}
+
+#news-text {
+  font-family: var(--font-ui);
+}
+
+.glow-inner {
+  stop-color: var(--tv-glow-inner);
+}
+
+.glow-outer {
+  stop-color: var(--tv-glow-outer);
+}
+
+/* Fills */
+.f-scene { fill: var(--scene); }
+.f-floor { fill: var(--scene-floor); }
+.f-hill { fill: var(--scene-hill); }
+.f-shadow { fill: var(--scene-shadow); }
+.f-cream { fill: var(--scene-text); }
+.f-orange { fill: var(--scene-orange); }
+.f-white { fill: var(--scene-white); }
+.f-bubble { fill: var(--scene-bubble); }
+.f-ink { fill: var(--ink); }
+.f-skin { fill: var(--skin); }
+.f-hair { fill: var(--hair); }
+.f-pajamas { fill: var(--pajamas); }
+.f-pajamas-bra { fill: var(--pajamas-bra); }
+.f-pants { fill: var(--pajama-pants); }
+.f-blanket { fill: var(--blanket); }
+.f-bra { fill: var(--bra); }
+.f-wood { fill: var(--wood); }
+.f-wood-dark { fill: var(--wood-dark); }
+.f-battery { fill: var(--battery); }
+.f-freckle { fill: var(--freckle); }
+
+/* Strokes */
+.s-ink { stroke: var(--ink); }
+.s-cream { stroke: var(--scene-text); }
+.s-pajamas { stroke: var(--pajamas); }
+.s-tear { stroke: var(--tear); }
+.s-freckle { stroke: var(--freckle); }

@@ -56,15 +56,26 @@
   --card-text: light-dark(#3b2418, #f2e3c6);
   --card-muted: light-dark(#5c4232, #d9c9a8);
 
-  /* Scene panel (same in both themes) */
+  /* Scene panel (same in both themes; outlines use --ink) */
   --scene-text: #f2e3c6;
   --scene-shadow: #163a47;
+  --scene-floor: #1a4150;
+  --scene-hill: #19404e;
+  --scene-orange: #f4a259;
+  --scene-white: #ffffff;
+  --scene-bubble: #e8f5ff;
+  --tv-glow-inner: #bfe6ff;
+  --tv-glow-outer: #8fc8ff;
 
   /* Character palette (same in both themes) */
   --skin: #f4c7a0;
   --hair: #c8562b;
   --pajamas: #7fb7be;
   --pajamas-bra: #5a979f;
+  --pajama-pants: #5f9ea6;
+  --freckle: #b8683f;
+  --tear: #9ad8e8;
+  --wood-dark: #8c5a30;
   --blanket: #d9534f;
   --bra: #e8a0a0;
   --wood: #b5733d;
