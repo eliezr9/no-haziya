@@ -3,13 +3,13 @@ import { createStore, parseSavedLocation } from '../src/state';
 
 describe('store', () => {
   it('notifies subscribers with the new and previous state', () => {
-    const store = createStore({ lang: 'he', location: null, step: 'idle', news: false });
+    const store = createStore({ lang: 'he', location: null, step: 'idle', outcome: null, news: false });
     const listener = vi.fn();
     store.subscribe(listener);
     store.set({ lang: 'en' });
     expect(listener).toHaveBeenCalledWith(
-      { lang: 'en', location: null, step: 'idle', news: false },
-      { lang: 'he', location: null, step: 'idle', news: false },
+      { lang: 'en', location: null, step: 'idle', outcome: null, news: false },
+      { lang: 'he', location: null, step: 'idle', outcome: null, news: false },
     );
   });
 });

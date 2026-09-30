@@ -37,6 +37,9 @@
   --switch-off: #d9c9a8;
   --switch-on: #c8562b;
   --switch-knob: #ffffff;
+  --card-bg: #ffffff;
+  --card-text: #3b2418;
+  --card-muted: #5c4232;
 
   /* Scene panel (same in both themes) */
   --scene-text: #f2e3c6;
@@ -90,5 +93,8 @@
     --switch-off: #4a3d35;
     --switch-on: #f4a259;
     --switch-knob: #f2e3c6;
+    --card-bg: #2e2520;
+    --card-text: #f2e3c6;
+    --card-muted: #d9c9a8;
   }
 }

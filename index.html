@@ -67,6 +67,19 @@
         <span id="check-btn-label"></span>
       </button>
 
+      <section id="result" class="result-card" hidden>
+        <p id="result-number" class="result-number" dir="ltr" aria-hidden="true"></p>
+        <div class="result-text">
+          <p id="result-level" class="result-level"></p>
+          <p id="result-headline" class="result-headline"></p>
+          <p id="result-why" class="result-why"></p>
+          <p id="result-note" class="result-note" hidden></p>
+        </div>
+        <button type="button" id="check-again" class="round-btn" data-i18n-aria-label="checkAgain">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6" /><path d="M20 4v5h-5" /></svg>
+        </button>
+      </section>
+
       <button type="button" id="news-switch" class="switch" role="switch" aria-checked="false" aria-disabled="true">
         <span data-i18n="newsSwitch"></span>
         <span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span>

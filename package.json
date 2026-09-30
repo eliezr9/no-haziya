@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "data:localities": "node scripts/build-localities.mjs"
+    "data:localities": "node scripts/build-localities.mjs",
+    "data:sample-scores": "node scripts/build-sample-scores.mjs"
   },
   "devDependencies": {
     "typescript": "^7.0.2",

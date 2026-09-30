@@ -30,6 +30,30 @@ export const he = {
   checkButton: 'אפשר לשחרר הלילה?',
   checking: 'בודקים את הלילה…',
   newsSwitch: 'להתחשב גם בחדשות',
+
+  // Result card
+  riskLevel: 'רמת סיכון · {band}',
+  bandLow: 'נמוכה',
+  bandMedium: 'בינונית',
+  bandHigh: 'גבוהה',
+  headlineLow: 'משחררים! לילה טוב',
+  headlineMedium: 'אפשר להוריד, רק להשאיר קרוב',
+  headlineHigh: 'הלילה נשארים עם חזייה',
+  sirens24hOne: 'אזעקה אחת באזור שלך ב-24 השעות האחרונות',
+  sirens24hMany: '{n} אזעקות באזור שלך ב-24 השעות האחרונות',
+  sirensWeekOne: 'שקט ביממה האחרונה, אזעקה אחת השבוע',
+  sirensWeekMany: 'שקט ביממה האחרונה, {n} אזעקות השבוע',
+  quietDaysOne: 'אין אזעקות באזור שלך ביממה האחרונה',
+  quietDaysTwo: 'אין אזעקות באזור שלך כבר יומיים',
+  quietDaysMany: 'אין אזעקות באזור שלך כבר {n} ימים',
+  policy: 'יש הגבלות של פיקוד העורף באזור שלך',
+  checkAgain: 'בדיקה חוזרת',
+  sampleData: 'נתוני דוגמה',
+  staleData: 'שימו לב: הנתונים עודכנו {ago}',
+  noDataTitle: 'אין לנו נתונים לאזור הזה עדיין',
+  noDataWhy: 'אפשר לנסות שוב מאוחר יותר',
+  errorTitle: 'לא הצלחנו לבדוק כרגע',
+  errorWhy: 'כדאי לבדוק את החיבור ולנסות שוב',
 };
 
 export type Strings = typeof he;

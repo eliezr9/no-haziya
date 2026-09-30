@@ -8,20 +8,18 @@ screenshots) for review before starting the next. Details live in SPEC.md and de
 - [x] Header: location chip, smart search (SPEC §7), GPS, language toggle
 - [x] Main button (idle / disabled / checking ≥1.2s) and news switch (UI only)
 - [x] Poster frame: wavy border (redrawn per screen size), spacing matched to design/screens at 390×844
+- [x] Result card + `scores.json` contract (src/scores.ts); SAMPLE data from
+      `npm run data:sample-scores` — demo areas: שדרות, איבים (high), תל אביב - מרכז העיר (medium), אילת (low)
 - [x] Preview hosting: https://no-haziya.pages.dev (Cloudflare Pages, auto-deploys on push to main)
 
 ## Next
-1. [ ] **Result card + data contract**
-   - define `scores.json` (per area: score, band, reason, `updatedAt`) + sample file
-   - result card (number counts up, band, headline, reason, "check again")
-   - stale-data warning (`updatedAt` > 15 min); unknown area / fetch error states
-2. [ ] **Scene, still frames** — port SVG from `design/Screen.dc.html`: standing/thinking,
+1. [ ] **Scene, still frames** — port SVG from `design/Screen.dc.html`: standing/thinking,
        checking dots, high / medium / low poses, moon, Iron Dome, news glow + "בלה בלה…"
-3. [ ] **Animation** — existing loops (ANIMATIONS.md §A), then transitions (§B); reduced motion
-4. [ ] **Fetcher (Raspberry Pi)** — verify Pikud HaOref endpoints, scoring (SPEC §6),
-       publish `scores.json` to the site
-5. [ ] **News rating** (optional, SPEC §6) — or ship v1 without it
-6. [ ] **Polish** — accessibility audit, Lighthouse, share/OG image, final subdomain
+2. [ ] **Animation** — existing loops (ANIMATIONS.md §A), then transitions (§B); reduced motion
+3. [ ] **Fetcher (Raspberry Pi)** — verify Pikud HaOref endpoints, scoring (SPEC §6),
+       publish `scores.json` to the site (replaces the sample file; format documented in src/scores.ts)
+4. [ ] **News rating** (optional, SPEC §6) — or ship v1 without it
+5. [ ] **Polish** — accessibility audit, Lighthouse, share/OG image, final subdomain
 
 ## Decided
 - **Active alert:** no special mode and no safety instructions; show the regular statistics-based answer (SPEC §6).

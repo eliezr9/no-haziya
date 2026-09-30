@@ -161,7 +161,7 @@ export function initHeader(store: Store): void {
     input.value = '';
     // A new city resets any result (SPEC 2b). set() re-renders via the subscription below,
     // so the chip exists before we focus it.
-    store.set({ location: { id: loc.id, he: loc.he, en: loc.en }, step: 'idle' });
+    store.set({ location: { id: loc.id, he: loc.he, en: loc.en }, step: 'idle', outcome: null });
     chip.focus();
     announce(format(strings[lang].chosen, { name: loc[lang] }));
   }

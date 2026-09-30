@@ -6,10 +6,12 @@ import './styles/tokens.css';
 import './styles/base.css';
 import './styles/header.css';
 import './styles/controls.css';
+import './styles/result.css';
 
 import { initControls } from './controls';
 import { initFrame } from './frame';
 import { initHeader } from './header';
+import { initResult } from './result';
 import { detectLang, dir, strings, type Lang, type Strings } from './i18n';
 import { createStore, parseSavedLocation, type Store } from './state';
 import { load, save } from './storage';
@@ -47,6 +49,7 @@ const store = createStore({
   lang: detectLang(load('nh.lang'), Intl.DateTimeFormat().resolvedOptions().timeZone),
   location: parseSavedLocation(load('nh.location')),
   step: 'idle',
+  outcome: null,
   news: false,
 });
 
@@ -62,4 +65,5 @@ applyLang(store.get().lang);
 initFrame(document.getElementById('app')!);
 initHeader(store);
 initControls(store);
+initResult(store);
 initScene(store);
