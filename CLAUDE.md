@@ -52,6 +52,8 @@ for phones, inline SVG lets every part animate independently, and Vite gives TS 
 - Privacy: no trackers, no accounts; only the city and language go in `localStorage`.
 
 ## How to work
+- **`ROADMAP.md` is the task list** — read it first; tick items off and add open decisions there.
+- After each step, **stop and show the preview + screenshots** for review before the next step.
 - **Never compute risk per request.** The site only reads the pre-built `scores.json`; scoring
   lives in `fetcher/`. No per-visit API calls to Pikud HaOref, news or LLMs from the browser.
 - Work in **small steps**: one screen state, one component or one animation at a time.
