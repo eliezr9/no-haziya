@@ -1,8 +1,8 @@
 // Scene illustration, ported from design/Screen.dc.html (viewBox 0 0 326 440).
 // Colors are classes (styles/scene.css → tokens.css), never raw values.
 // `data-when="<states>"` shows a part only in those scene states (see scene.ts);
-// `.news` parts only when the news switch is on. The design's variant b/c high poses
-// and the SMIL loops are not ported here — motion comes in the animation step.
+// `.news` parts only when the news switch is on. The design's variant b/c high poses are
+// not ported. Its SMIL loops are CSS keyframes in styles/scene.css (ANIMATIONS.md §A).
 export const sceneMarkup = /* svg */ `
 <defs>
   <clipPath id="panelclip"><rect x="10" y="40" width="306" height="390" rx="24" /></clipPath>
@@ -156,8 +156,8 @@ export const sceneMarkup = /* svg */ `
         <circle cx="30" cy="28" r="2" />
         <circle cx="50" cy="28" r="2" />
       </g>
-      <!-- Interceptor: invisible in the still frame; launched in the animation step. -->
-      <g id="interceptor" data-when="high" opacity="0">
+      <!-- Interceptor: invisible at rest (styles/scene.css launches it). -->
+      <g id="interceptor" data-when="high">
         <circle id="launch-puff" class="f-cream" cx="38" cy="-23" r="3" />
         <g id="missile" transform="translate(38 -23)">
           <g transform="rotate(14)" class="s-ink" stroke-width="1.8" stroke-linejoin="round">

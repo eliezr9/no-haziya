@@ -41,6 +41,154 @@
   stop-color: var(--tv-glow-outer);
 }
 
+/* Loops — design/ANIMATIONS.md §A, timings copied from the SMIL in Screen.dc.html.
+   Each animation is scoped to the state (or news switch) that shows its part, so it starts
+   fresh every time the part appears. The base styles are the still frame, which is all that shows with prefers-reduced-motion
+   (base.css turns animations off). */
+
+/* 3 · Checking: dots blink one after another */
+.scene-svg[data-state='checking'] #thought-dots circle {
+  animation: dot-blink 1.2s linear infinite;
+}
+
+.scene-svg[data-state='checking'] #thought-dots circle:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.scene-svg[data-state='checking'] #thought-dots circle:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dot-blink {
+  50% { opacity: 0.2; }
+}
+
+/* News on: TV glow flickers and shifts color; the bubble floats, its text wobbles */
+.scene-svg[data-news] #tv-glow {
+  animation: glow-flicker 2.6s linear infinite;
+}
+
+@keyframes glow-flicker {
+  0%, 15%, 45%, 70%, 100% { opacity: 1; }
+  8% { opacity: 0.75; }
+  30% { opacity: 0.9; }
+  34% { opacity: 0.55; }
+  60% { opacity: 0.85; }
+  74% { opacity: 0.65; }
+}
+
+.scene-svg[data-news] .glow-inner {
+  animation: glow-inner 4.2s linear infinite;
+}
+
+.scene-svg[data-news] .glow-outer {
+  animation: glow-outer 4.2s linear infinite;
+}
+
+/* seven evenly spaced values, like the SMIL: 0, 1/6, 2/6 … */
+@keyframes glow-inner {
+  0%, 50%, 100% { stop-color: var(--tv-glow-inner); }
+  16.667% { stop-color: var(--tv-glow-inner-white); }
+  33.333% { stop-color: var(--tv-glow-inner-warm); }
+  66.667% { stop-color: var(--tv-glow-inner-green); }
+  83.333% { stop-color: var(--tv-glow-inner-purple); }
+}
+
+@keyframes glow-outer {
+  0%, 50%, 100% { stop-color: var(--tv-glow-outer); }
+  16.667% { stop-color: var(--tv-glow-outer-white); }
+  33.333% { stop-color: var(--tv-glow-outer-warm); }
+  66.667% { stop-color: var(--tv-glow-outer-green); }
+  83.333% { stop-color: var(--tv-glow-outer-purple); }
+}
+
+.scene-svg[data-news] #news-bubble {
+  animation: bubble-float 3.4s linear infinite;
+}
+
+@keyframes bubble-float {
+  25% { transform: translate(2px, -5px); }
+  50% { transform: translate(0, -2px); }
+  75% { transform: translate(-1px, -6px); }
+}
+
+#news-text {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(-3deg);
+}
+
+.scene-svg[data-news] #news-text {
+  animation: text-wobble 1.4s linear infinite;
+}
+
+@keyframes text-wobble {
+  50% { transform: rotate(3deg); }
+}
+
+/* 4 + 5: Iron Dome truck rolls in from the right and stops behind the bed */
+#truck {
+  transform: translate(160px, 212px);
+}
+
+.scene-svg[data-state='high'] #truck,
+.scene-svg[data-state='medium'] #truck {
+  animation: truck-in 1.8s cubic-bezier(0.2, 0, 0.2, 1) backwards;
+}
+
+@keyframes truck-in {
+  from { transform: translate(350px, 212px); }
+}
+
+/* 5 · Medium: radar dish spins once the truck has stopped */
+.scene-svg[data-state='medium'] #radar-dish {
+  animation: radar-spin 2.4s linear 1.8s infinite;
+}
+
+@keyframes radar-spin {
+  25%, 75% { transform: scaleX(0.12); }
+  50% { transform: scaleX(-1); }
+}
+
+/* 4 · High: every 5s a smoke puff and an interceptor that flies out of the top of the frame */
+#launch-puff {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scene-svg[data-state='high'] #launch-puff {
+  animation: launch-puff 5s linear 2.2s infinite;
+}
+
+@keyframes launch-puff {
+  0% { opacity: 0.9; transform: scale(1); }
+  12%, 100% { opacity: 0; transform: scale(4); }
+}
+
+#missile {
+  opacity: 0;
+  transform: translate(38px, -23px);
+}
+
+.scene-svg[data-state='high'] #missile {
+  animation: missile-fly 5s linear 2.2s infinite;
+}
+
+@keyframes missile-fly {
+  0% { opacity: 1; transform: translate(38px, -23px); }
+  30% { opacity: 1; transform: translate(120px, -300px); }
+  30.01%, 100% { opacity: 0; transform: translate(120px, -300px); }
+}
+
+.scene-svg[data-state='high'] #missile-flame {
+  animation: flame-flicker 0.16s linear infinite;
+}
+
+@keyframes flame-flicker {
+  50% { opacity: 0.4; }
+}
+
 /* Fills */
 .f-scene { fill: var(--scene); }
 .f-floor { fill: var(--scene-floor); }

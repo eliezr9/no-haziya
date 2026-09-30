@@ -64,8 +64,17 @@
   --scene-orange: #f4a259;
   --scene-white: #ffffff;
   --scene-bubble: #e8f5ff;
+  /* TV glow color cycle (news on): blue → white → warm → blue → green → purple */
   --tv-glow-inner: #bfe6ff;
+  --tv-glow-inner-white: #e2f3ff;
+  --tv-glow-inner-warm: #ffd9b8;
+  --tv-glow-inner-green: #c8ffe0;
+  --tv-glow-inner-purple: #d6c8ff;
   --tv-glow-outer: #8fc8ff;
+  --tv-glow-outer-white: #b0c4ff;
+  --tv-glow-outer-warm: #ffb88f;
+  --tv-glow-outer-green: #8fffc0;
+  --tv-glow-outer-purple: #b99bff;
 
   /* Character palette (same in both themes) */
   --skin: #f4c7a0;
