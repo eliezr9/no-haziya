@@ -15,12 +15,25 @@ const DEMO = {
 const band = (score) => (score <= 30 ? 'low' : score <= 65 ? 'medium' : 'high');
 const hash = (n, salt) => (Math.imul(n ^ salt, 2654435761) >>> 0) % 1000;
 
+// Reason and score agree, like real data would: more sirens → higher, longer quiet → lower.
+// (Real scores also weigh policy level, early warnings and the national trend — SPEC §6 —
+// so a quiet area isn't necessarily 0.)
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
 function sample(id) {
   const h = hash(id, 0x5eed) / 1000;
   const k = hash(id, 0xbeef);
-  if (h < 0.15) return { score: 66 + (k % 30), band: 'high', reason: k % 4 ? { code: 'sirens24h', n: 1 + (k % 6) } : { code: 'policy', n: 0 } };
-  if (h < 0.4) return { score: 31 + (k % 35), band: 'medium', reason: { code: 'sirensWeek', n: 1 + (k % 4) } };
-  return { score: 3 + (k % 28), band: 'low', reason: { code: 'quietDays', n: 2 + (k % 13) } };
+  if (h < 0.15) {
+    const score = 66 + (k % 30);
+    const reason = k % 4 ? { code: 'sirens24h', n: 1 + Math.floor((score - 66) / 5) } : { code: 'policy', n: 0 };
+    return { score, band: 'high', reason };
+  }
+  if (h < 0.4) {
+    const score = 31 + (k % 35);
+    return { score, band: 'medium', reason: { code: 'sirensWeek', n: 1 + Math.floor((score - 31) / 9) } };
+  }
+  const score = 3 + (k % 28);
+  return { score, band: 'low', reason: { code: 'quietDays', n: clamp(Math.round((32 - score) / 3.3), 2, 14) } };
 }
 
 const areas = {};

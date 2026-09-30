@@ -48,6 +48,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+.result-number .pct {
+  font-size: 0.55em;
+}
+
 .result-text {
   flex-grow: 1;
   min-inline-size: 0;

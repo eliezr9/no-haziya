@@ -44,12 +44,12 @@ for phones, inline SVG lets every part animate independently, and Vite gives TS 
 - **Mobile-first.** Base styles for ~360px; widen with `min-width` media queries. Tap targets ≥ 44px.
 - **Accessibility.** Semantic HTML, real `<button>`s, visible focus, labelled search combobox
   (ARIA combobox/listbox pattern), `aria-live` for the result, `role="img"` + `aria-label` on the scene,
-  WCAG AA contrast in both themes. Honor `prefers-reduced-motion` (final frame only) and
-  `prefers-color-scheme` (no toggles).
-- **Design tokens only.** Colors from SPEC §3 as CSS variables in `styles/tokens.css`
-  (light + dark); no raw hex elsewhere. Fonts: Rubik Mono One (title/number), Rubik (UI).
+  WCAG AA contrast in both themes. Honor `prefers-reduced-motion` (final frame only, no toggle).
+  Theme follows `prefers-color-scheme` unless the header toggle overrides it.
+- **Design tokens only.** Colors from SPEC §3 as CSS variables in `styles/tokens.css`, written
+  as `light-dark(light, dark)`; no raw hex elsewhere. Fonts: Rubik Mono One (title/number), Rubik (UI).
 - Match the final frames in `design/screens/` exactly; reuse shapes/positions from `Screen.dc.html`.
-- Privacy: no trackers, no accounts; only the city and language go in `localStorage`.
+- Privacy: no trackers, no accounts; only the city, language and theme choice go in `localStorage`.
 
 ## How to work
 - **`ROADMAP.md` is the task list** — read it first; tick items off and add open decisions there.

@@ -1,45 +1,60 @@
 /* Design tokens — SPEC.md §3, plus the UI colors from design/Screen.dc.html (P.light / P.dark).
-   The only place raw colors may appear. */
+   The only place raw colors may appear.
+
+   light-dark(<light>, <dark>) picks by `color-scheme`: the system setting by default, or the
+   header's theme toggle, which sets data-theme on <html> (see src/theme.ts). */
 :root {
-  --frame: #c8562b;
-  --body: #f2e3c6;
-  --wave: #f4a259;
-  --title: #c8562b;
-  --subtitle: #1f4a5a;
-  --btn-bg: #1f4a5a;
-  --btn-text: #f2e3c6;
-  --ink: #3b2418;
+  color-scheme: light dark;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+:root {
+  --frame: light-dark(#c8562b, #8f3a1c);
+  --body: light-dark(#f2e3c6, #211a16);
+  --wave: light-dark(#f4a259, #8a4a26);
+  --title: light-dark(#c8562b, #e8743f);
+  --subtitle: light-dark(#1f4a5a, #7fb7be);
+  --btn-bg: light-dark(#1f4a5a, #f4a259);
+  --btn-text: light-dark(#f2e3c6, #211a16);
+  --ink: light-dark(#3b2418, #120c09);
   --scene: #1f4a5a;
-  --risk-high: #b8401c;
-  --risk-med: #9a5a1e;
-  --risk-low: #1f6a5a;
+  --risk-high: light-dark(#b8401c, #ff8a5c);
+  --risk-med: light-dark(#9a5a1e, #f4c06a);
+  --risk-low: light-dark(#1f6a5a, #8fd3d0);
 
   /* UI (design file) */
-  --text: #3b2418;
-  --text-muted: #3b2418;
-  --ui: #3b2418;
-  --chip-bg: #ffffff;
-  --chip-text: #3b2418;
-  --pin: #c8562b;
+  --text: light-dark(#3b2418, #f2e3c6);
+  --text-muted: light-dark(#3b2418, #d9c9a8);
+  --ui: light-dark(#3b2418, #f2e3c6);
+  --chip-bg: light-dark(#ffffff, #2e2520);
+  --chip-text: light-dark(#3b2418, #f2e3c6);
+  --pin: light-dark(#c8562b, #f4a259);
   --lang-bg: #1f4a5a;
   --lang-text: #f2e3c6;
-  --lang-border: #3b2418;
-  --btn-border: #3b2418;
-  --btn-shadow: #3b2418;
-  --panel-stroke: #3b2418;
-  --hl: #f7ecd9;
-  --hl-text: #9c3f1c;
-  --divider: #e6d6b8;
-  --pill-bg: #1f4a5a;
-  --pill-text: #ffffff;
-  --focus: #c8562b;
-  --ring: rgba(200, 86, 43, 0.25);
-  --switch-off: #d9c9a8;
-  --switch-on: #c8562b;
-  --switch-knob: #ffffff;
-  --card-bg: #ffffff;
-  --card-text: #3b2418;
-  --card-muted: #5c4232;
+  --lang-border: light-dark(#3b2418, #f2e3c6);
+  --btn-border: light-dark(#3b2418, #120c09);
+  --btn-shadow: light-dark(#3b2418, #120c09);
+  --panel-stroke: light-dark(#3b2418, #8a4a26);
+  --hl: light-dark(#f7ecd9, #3d3129);
+  --hl-text: light-dark(#9c3f1c, #f4a259);
+  --divider: light-dark(#e6d6b8, #4a3d35);
+  --pill-bg: light-dark(#1f4a5a, #f4a259);
+  --pill-text: light-dark(#ffffff, #211a16);
+  --focus: light-dark(#c8562b, #f4a259);
+  --ring: light-dark(rgba(200, 86, 43, 0.25), rgba(244, 162, 89, 0.28));
+  --switch-off: light-dark(#d9c9a8, #4a3d35);
+  --switch-on: light-dark(#c8562b, #f4a259);
+  --switch-knob: light-dark(#ffffff, #f2e3c6);
+  --card-bg: light-dark(#ffffff, #2e2520);
+  --card-text: light-dark(#3b2418, #f2e3c6);
+  --card-muted: light-dark(#5c4232, #d9c9a8);
 
   /* Scene panel (same in both themes) */
   --scene-text: #f2e3c6;
@@ -57,44 +72,4 @@
 
   --font-display: 'Rubik Mono One', system-ui, sans-serif;
   --font-ui: 'Rubik', system-ui, sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --frame: #8f3a1c;
-    --body: #211a16;
-    --wave: #8a4a26;
-    --title: #e8743f;
-    --subtitle: #7fb7be;
-    --btn-bg: #f4a259;
-    --btn-text: #211a16;
-    --ink: #120c09;
-    --risk-high: #ff8a5c;
-    --risk-med: #f4c06a;
-    --risk-low: #8fd3d0;
-
-    --text: #f2e3c6;
-    --text-muted: #d9c9a8;
-    --ui: #f2e3c6;
-    --chip-bg: #2e2520;
-    --chip-text: #f2e3c6;
-    --pin: #f4a259;
-    --lang-border: #f2e3c6;
-    --btn-border: #120c09;
-    --btn-shadow: #120c09;
-    --panel-stroke: #8a4a26;
-    --hl: #3d3129;
-    --hl-text: #f4a259;
-    --divider: #4a3d35;
-    --pill-bg: #f4a259;
-    --pill-text: #211a16;
-    --focus: #f4a259;
-    --ring: rgba(244, 162, 89, 0.28);
-    --switch-off: #4a3d35;
-    --switch-on: #f4a259;
-    --switch-knob: #f2e3c6;
-    --card-bg: #2e2520;
-    --card-text: #f2e3c6;
-    --card-muted: #d9c9a8;
-  }
 }

@@ -13,7 +13,7 @@
 - **Accessible & mobile-first**: most users check from bed on a phone.
 - **Bilingual**: Hebrew (RTL) is the default. English (LTR) is the default when the browser time zone is not `Asia/Jerusalem`. A manual `עב / EN` toggle always wins and is remembered locally.
 - **Zero server load per visit**: the site never computes risk per request (see §5).
-- **Privacy**: no accounts, no tracking. The chosen city is stored only in the browser (`localStorage`).
+- **Privacy**: no accounts, no tracking. The chosen city, language and theme choice are stored only in the browser (`localStorage`).
 
 ## 2. Screens & flow
 
@@ -49,7 +49,7 @@ Pillow has no face. Pajama top has a single cream stripe (lying pose) / two stri
 
 - Poster-inspired layout: rust frame, cream body, wavy inner border, chunky display title; storybook palette; dark-brown ink outlines.
 - Fonts: `Rubik Mono One` (title/number), `Rubik` (UI, Hebrew + English).
-- **Light / dark mode follow the OS setting** (`prefers-color-scheme`), no toggle.
+- **Light / dark mode follow the OS setting** (`prefers-color-scheme`) by default. A round toggle next to the language button overrides it; the choice is remembered locally (choosing the system's own theme goes back to following the system).
 - **Reduced motion follows the OS setting** (`prefers-reduced-motion`): skip straight to the final pose. No toggle.
 
 Design tokens:
@@ -84,7 +84,7 @@ Character palette: skin `#f4c7a0`, hair `#c8562b`, pajamas `#7fb7be` (bra-under-
 
 - The Pikud HaOref site usually blocks non-Israeli IPs, so the fetcher runs on the user's Raspberry Pi 5 (fallback: a community mirror such as Tzeva Adom).
 - `scores.json` contains, per alert area: score, band, reason fields, and `updatedAt`.
-- The site shows a gentle warning if `updatedAt` is stale (e.g. > 15 min).
+- The site shows a gentle warning if `updatedAt` is stale (> 15 min), with the real age ("updated 3 hours ago"), kept current while the card is open. The last published score is still shown.
 - Hosting candidates: Cloudflare Pages / Netlify / GitHub Pages (auto-deploy on push).
 
 ## 6. Risk calculation (0–100)

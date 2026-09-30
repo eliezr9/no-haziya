@@ -47,9 +47,23 @@
   flex-shrink: 0;
   min-width: 44px;
   padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2.5px solid var(--lang-border);
   background: var(--lang-bg);
   color: var(--lang-text);
+}
+
+.theme-toggle {
+  padding: 0;
+  /* keeps the two round buttons together at the end of the row, next to the chip or search */
+  margin-inline-start: auto;
+}
+
+/* the two round buttons sit a little closer to each other than to the chip */
+.theme-toggle + .lang {
+  margin-inline-start: -4px;
 }
 
 .search {

@@ -25,5 +25,7 @@ screenshots) for review before starting the next. Details live in SPEC.md and de
 - **Active alert:** no special mode and no safety instructions; show the regular statistics-based answer (SPEC §6).
 
 ## Open decisions
+- **Very old data:** today a stale file still shows its last score plus "updated X ago". Should the
+  verdict be hidden after some age (e.g. 6 hours, when the Pi is clearly down)?
 - How the Pi uploads `scores.json` to the host (git push / Cloudflare R2 / KV).
 - LLM provider for news (or drop news in v1); animation tool (SVG vs Rive).

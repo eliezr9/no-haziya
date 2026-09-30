@@ -6,11 +6,13 @@ export const he = {
 
   // Language toggle — shown when switching *to* this language
   langShort: 'עב',
+  themeToDark: 'מעבר למצב כהה',
+  themeToLight: 'מעבר למצב בהיר',
   switchToThis: 'החלפה לעברית',
 
   // Location search
   searchLabel: 'חיפוש מיקום',
-  searchPlaceholder: 'איפה ישנים הלילה? עיר או יישוב',
+  searchPlaceholder: 'איפה ישנים הלילה?',
   suggestionsLabel: 'הצעות מיקום',
   bestMatch: 'הכי מתאים',
   useMyLocation: 'שימוש במיקום הנוכחי שלי',

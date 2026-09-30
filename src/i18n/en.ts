@@ -7,10 +7,12 @@ export const en: Strings = {
     'This site is just for fun; its estimate is not safety guidance. Always follow Home Front Command instructions.',
 
   langShort: 'EN',
+  themeToDark: 'Switch to dark mode',
+  themeToLight: 'Switch to light mode',
   switchToThis: 'Switch to English',
 
   searchLabel: 'Search location',
-  searchPlaceholder: 'Where are you sleeping tonight? City or town',
+  searchPlaceholder: 'City or town',
   suggestionsLabel: 'Location suggestions',
   bestMatch: 'Best match',
   useMyLocation: 'Use my current location',

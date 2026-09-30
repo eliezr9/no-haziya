@@ -9,9 +9,11 @@ export function load(key: string): unknown {
   }
 }
 
+/** Saves as JSON; null or undefined removes the key. */
 export function save(key: string, value: unknown): void {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (value === null || value === undefined) localStorage.removeItem(key);
+    else localStorage.setItem(key, JSON.stringify(value));
   } catch {
     // ignore
   }

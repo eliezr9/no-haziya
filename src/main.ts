@@ -12,6 +12,7 @@ import { initControls } from './controls';
 import { initFrame } from './frame';
 import { initHeader } from './header';
 import { initResult } from './result';
+import { initTheme } from './theme';
 import { detectLang, dir, strings, type Lang, type Strings } from './i18n';
 import { createStore, parseSavedLocation, type Store } from './state';
 import { load, save } from './storage';
@@ -63,6 +64,7 @@ store.subscribe((state, prev) => {
 
 applyLang(store.get().lang);
 initFrame(document.getElementById('app')!);
+initTheme(store);
 initHeader(store);
 initControls(store);
 initResult(store);

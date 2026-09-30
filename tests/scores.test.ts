@@ -80,12 +80,14 @@ describe('result text', () => {
     expect(agoText('en', new Date(now - 20 * 60_000), now)).toBe('20 minutes ago');
     expect(agoText('en', new Date(now - 3 * 3_600_000), now)).toBe('3 hours ago');
     expect(agoText('he', new Date(now - 3 * 3_600_000), now)).toBe('לפני 3 שעות');
+    expect(agoText('he', new Date(now - 3_600_000), now)).toBe('לפני שעה');
+    expect(agoText('he', new Date(now - 2 * 3_600_000), now)).toBe('לפני שעתיים');
   });
 
   it('builds a screen-reader summary for every outcome', () => {
     const area = { score: 9, band: 'low' as const, reason: { code: 'quietDays' as const, n: 7 } };
     const result = { kind: 'result' as const, area, updatedAt: new Date(), sample: false };
-    expect(summaryText(en, result, false)).toBe('Risk level · Low: 9. Off it goes! Good night. No alerts in your area for 7 days');
+    expect(summaryText(en, result, false)).toBe('Risk level · Low: 9%. Off it goes! Good night. No alerts in your area for 7 days');
     expect(summaryText(he, { kind: 'noData' }, false)).toContain(he.noDataTitle);
     expect(summaryText(he, { kind: 'error' }, false)).toContain(he.errorTitle);
   });

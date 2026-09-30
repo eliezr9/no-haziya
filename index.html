@@ -8,6 +8,13 @@
     <meta name="theme-color" content="#8f3a1c" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>NO-HAZIYA</title>
+    <script>
+      // Apply a saved light/dark choice before first paint (see src/theme.ts).
+      try {
+        var t = JSON.parse(localStorage.getItem('nh.theme'));
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <main id="app" class="poster">
@@ -35,6 +42,7 @@
           />
         </label>
 
+        <button type="button" id="theme-toggle" class="lang theme-toggle"></button>
         <button type="button" id="lang-toggle" class="lang"></button>
 
         <div id="loc-dropdown" class="dropdown" hidden>
@@ -68,7 +76,7 @@
       </button>
 
       <section id="result" class="result-card" hidden>
-        <p id="result-number" class="result-number" dir="ltr" aria-hidden="true"></p>
+        <p id="result-number" class="result-number" dir="ltr" aria-hidden="true"><span id="result-digits"></span><span class="pct">%</span></p>
         <div class="result-text">
           <p id="result-level" class="result-level"></p>
           <p id="result-headline" class="result-headline"></p>
