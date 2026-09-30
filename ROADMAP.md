@@ -15,7 +15,8 @@ screenshots) for review before starting the next. Details live in SPEC.md and de
       standing/thinking, checking dots, high / medium / low poses, moon, Iron Dome, news glow + bubble
 
 ## Next
-1. [ ] **Animation** — loops (§A) done as CSS keyframes in `styles/scene.css`; still to do:
+1. [ ] **Animation** — loops (§A) done as CSS keyframes in `styles/scene.css`, plus the low-risk
+       bra throw (arc + spin, trail draws in, then floats; sparkles twinkle); still to do:
        transitions (ANIMATIONS.md §B) — walk to bed, per-risk sequences, moon snap
 2. [ ] **Fetcher (Raspberry Pi)** — verify Pikud HaOref endpoints, scoring (SPEC §6),
        publish `scores.json` to the site (replaces the sample file; format documented in src/scores.ts)

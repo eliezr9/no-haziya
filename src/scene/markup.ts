@@ -255,14 +255,21 @@ export const sceneMarkup = /* svg */ `
       <text x="138" y="246" font-size="18">z</text>
       <text x="154" y="226" font-size="22">Z</text>
     </g>
-    <path id="bra-trail" class="s-cream" d="M170 282 Q190 200 214 176" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6" />
-    <g id="bra-flying" class="s-ink" transform="translate(212 150) rotate(-28)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M2 2 Q4 -12 8 -15 M34 2 Q32 -12 28 -15" fill="none" />
-      <path class="f-bra" d="M0 2 Q0 16 11 16 Q17 16 18 8 Q19 16 25 16 Q36 16 36 2 Z" />
+    <mask id="bra-trail-mask" maskUnits="userSpaceOnUse">
+      <path id="bra-trail-reveal" class="s-white" d="M170 282 Q190 200 214 176" fill="none" stroke-width="8" pathLength="100" />
+    </mask>
+    <path id="bra-trail" class="s-cream" d="M170 282 Q190 200 214 176" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6" mask="url(#bra-trail-mask)" />
+    <!-- Pivot at the bra's center, so CSS can spin it in place; the rest pose
+         (styles/scene.css) equals the design's translate(212 150) rotate(-28). -->
+    <g id="bra-flying">
+      <g class="s-ink" transform="translate(-18 -2)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M2 2 Q4 -12 8 -15 M34 2 Q32 -12 28 -15" fill="none" />
+        <path class="f-bra" d="M0 2 Q0 16 11 16 Q17 16 18 8 Q19 16 25 16 Q36 16 36 2 Z" />
+      </g>
     </g>
     <g id="sparkles" class="f-orange">
-      <path d="M258 150 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3 Z" />
-      <path d="M196 116 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 Z" />
+      <path id="sparkle-big" d="M258 150 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3 Z" />
+      <path id="sparkle-small" d="M196 116 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 Z" />
     </g>
   </g>
 </g>
