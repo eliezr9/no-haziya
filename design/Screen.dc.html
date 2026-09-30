@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>נו-חזייה · מסך</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&amp;family=Rubik:wght@500;800;900&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div dir="rtl" style="width: 390px; height: 844px; position: relative; overflow: hidden; background: {{c.frame}}; color: {{c.label}}; font-family: 'Rubik', sans-serif;">
+<svg width="390" height="844" viewBox="0 0 390 844" style="position: absolute; left: 0; top: 0;" aria-hidden="true">
+<rect x="14" y="14" width="362" height="816" rx="6" fill="{{c.body}}"></rect>
+<path d="{{wave}}" fill="none" stroke="{{c.wave}}" stroke-width="3"></path>
+</svg>
+<div style="position: relative; height: 844px; box-sizing: border-box; padding: 34px 32px 38px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+<div style="width: 100%; position: relative; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+<sc-if value="{{showChip}}" hint-placeholder-val="{{ true }}">
+<button style="height: 44px; display: flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 22px; border: 2.5px solid {{c.ui}}; background: {{c.chipBg}}; color: {{c.chipText}}; font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 800;">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{c.pin}}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+<span>תל אביב - יפו</span>
+</button>
+</sc-if>
+<sc-if value="{{showSearch}}" hint-placeholder-val="{{ false }}">
+<label style="flex-grow: 1; height: 44px; box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 0 14px; border-radius: 22px; border: {{search.border}}; box-shadow: {{search.ring}}; background: {{c.chipBg}}; color: {{c.chipText}};">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{c.pin}}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">חיפוש מיקום</span>
+<input id="loc-search" type="text" defaultValue="{{search.value}}" placeholder="איפה ישנים הלילה? עיר או יישוב" style="flex-grow: 1; min-width: 0; border: none; outline: none; background: transparent; color: {{c.chipText}}; font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 500;">
+</label>
+</sc-if>
+<button style="height: 44px; min-width: 44px; padding: 0 12px; border-radius: 22px; border: 2.5px solid {{c.langBorder}}; background: {{c.langBg}}; color: {{c.langText}}; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 14px;" aria-label="Switch to English">EN</button>
+<sc-if value="{{isSearch}}" hint-placeholder-val="{{ false }}">
+<div role="listbox" aria-label="הצעות מיקום" style="position: absolute; top: 54px; left: 0; right: 0; z-index: 5; box-sizing: border-box; padding: 6px; border-radius: 18px; border: 2.5px solid {{c.ui}}; background: {{c.chipBg}}; color: {{c.chipText}}; box-shadow: 0 5px 0 {{c.btnShadow}}; display: flex; flex-direction: column; gap: 2px;">
+<sc-for list="{{suggestions}}" as="s" hint-placeholder-count="3">
+<button role="option" aria-selected="{{s.selected}}" style="min-height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border: none; border-radius: 12px; background: {{s.bg}}; color: {{c.chipText}}; font-family: 'Rubik', sans-serif; font-size: 16px; font-weight: 500; text-align: right;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{c.pin}}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+<span style="flex-grow: 1;"><span>{{s.pre}}</span><span style="font-weight: 900; color: {{c.hlText}};">{{s.match}}</span><span>{{s.post}}</span></span>
+<sc-if value="{{s.best}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 10px; background: {{c.pillBg}}; color: {{c.pillText}};">הכי מתאים</span>
+</sc-if>
+</button>
+</sc-for>
+<div style="height: 2px; margin: 4px 8px; background: {{c.divider}};"></div>
+<button style="min-height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border: none; border-radius: 12px; background: transparent; color: {{c.chipText}}; font-family: 'Rubik', sans-serif; font-size: 15px; font-weight: 800; text-align: right;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{c.pin}}" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="6.5"></circle><circle cx="12" cy="12" r="2" fill="{{c.pin}}"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg>
+<span>שימוש במיקום הנוכחי שלי</span>
+</button>
+</div>
+</sc-if>
+</div>
+<div dir="ltr" style="margin-top: 6px; font-family: 'Rubik Mono One', sans-serif; font-size: 40px; line-height: 1; color: {{c.title}}; letter-spacing: -1px; text-align: center;">NO-HAZIYA</div>
+<div style="font-size: 21px; font-weight: 900; color: {{c.sub}}; text-align: center; line-height: 1.2;">אפשר לישון הלילה בלי חזייה?</div>
+<div style="width: 304px; height: 410px; flex-shrink: 0;">
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{ false }}">
+<label for="loc-search" style="width: 304px; height: 410px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; border-radius: 22px; border: 3.5px solid {{c.panelStroke}}; background: #1f4a5a; color: #f2e3c6; cursor: pointer;">
+<svg width="84" height="104" viewBox="0 0 84 104" aria-hidden="true">
+<ellipse cx="42" cy="98" rx="22" ry="5" fill="#163a47"></ellipse>
+<path d="M42 96 C42 96 6 64 6 38 A36 36 0 0 1 78 38 C78 64 42 96 42 96 Z" fill="#c8562b" stroke="{{c.ink}}" stroke-width="4" stroke-linejoin="round"></path>
+<circle cx="42" cy="37" r="13" fill="#f2e3c6" stroke="{{c.ink}}" stroke-width="3.5"></circle>
+</svg>
+<span style="font-size: 24px; font-weight: 900;">נא לבחור מיקום</span>
+</label>
+</sc-if>
+<sc-if value="{{hasLocation}}" hint-placeholder-val="{{ true }}">
+<svg width="304" height="410" viewBox="0 0 326 440" role="img" aria-label="{{sceneLabel}}">
+<defs>
+<clipPath id="panelclip"><rect x="10" y="40" width="306" height="390" rx="24"></rect></clipPath>
+<radialGradient id="tvglow" cx="0" cy="0.5" r="1">
+<stop offset="0" stop-color="#bfe6ff" stop-opacity="0.55"><animate attributeName="stop-color" values="#bfe6ff;#e2f3ff;#ffd9b8;#bfe6ff;#c8ffe0;#d6c8ff;#bfe6ff" dur="4.2s" repeatCount="indefinite"></animate></stop>
+<stop offset="0.55" stop-color="#8fc8ff" stop-opacity="0.18"><animate attributeName="stop-color" values="#8fc8ff;#b0c4ff;#ffb88f;#8fc8ff;#8fffc0;#b99bff;#8fc8ff" dur="4.2s" repeatCount="indefinite"></animate></stop>
+<stop offset="1" stop-color="#8fc8ff" stop-opacity="0"></stop>
+</radialGradient>
+</defs>
+<rect x="10" y="40" width="306" height="390" rx="24" fill="#1f4a5a"></rect>
+<g clip-path="url(#panelclip)">
+<rect x="10" y="352" width="306" height="80" fill="#1a4150"></rect>
+<rect x="10" y="40" width="200" height="390" fill="url(#tvglow)" display="{{d.news}}"><animate attributeName="opacity" values="1;0.75;1;0.9;0.55;1;0.85;1;0.65;1" keyTimes="0;0.08;0.15;0.3;0.34;0.45;0.6;0.7;0.74;1" dur="2.6s" repeatCount="indefinite"></animate></rect>
+</g>
+<rect x="10" y="40" width="306" height="390" rx="24" fill="none" stroke="{{c.panelStroke}}" stroke-width="3.5"></rect>
+<circle cx="290" cy="240" r="2.5" fill="#f4a259"></circle>
+<circle cx="220" cy="80" r="2" fill="#f4a259"></circle>
+<circle cx="36" cy="300" r="1.8" fill="#f2e3c6"></circle>
+<circle cx="300" cy="120" r="1.8" fill="#f2e3c6"></circle>
+<g stroke="{{c.ink}}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="64" cy="98" r="30" fill="#f2e3c6"></circle>
+<ellipse cx="56" cy="94" rx="8" ry="10" fill="#ffffff" display="{{d.notLow}}"></ellipse>
+<ellipse cx="74" cy="94" rx="8" ry="10" fill="#ffffff" display="{{d.notLow}}"></ellipse>
+<path d="M49 95 Q56 101 63 95 M67 95 Q74 101 81 95" fill="none" stroke-width="3" display="{{d.low}}"></path>
+<path d="M56 112 Q64 118 72 112" fill="none" stroke-width="3" display="{{d.moonSmile}}"></path>
+<path d="M56 116 Q64 110 72 116" fill="none" stroke-width="3" display="{{d.moonWorried}}"></path>
+</g>
+<g display="{{d.notLow}}">
+<circle cx="59" cy="90" r="4" fill="{{c.ink}}"></circle>
+<circle cx="77" cy="90" r="4" fill="{{c.ink}}"></circle>
+</g>
+<g display="{{d.low}}">
+<text x="96" y="76" fill="#f2e3c6" font-family="Rubik Mono One, sans-serif" font-size="11">z</text>
+<text x="106" y="64" fill="#f2e3c6" font-family="Rubik Mono One, sans-serif" font-size="14">z</text>
+</g>
+
+<g display="{{d.standing}}">
+<g stroke="{{c.ink}}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M166 176 Q156 150 180 140 Q196 118 226 128 Q254 124 262 150 Q284 166 266 186 Q260 208 232 204 Q208 216 190 200 Q164 200 166 176 Z" fill="#f2e3c6"></path>
+<circle cx="160" cy="214" r="7" fill="#f2e3c6"></circle>
+<circle cx="150" cy="232" r="4.5" fill="#f2e3c6"></circle>
+<g display="{{d.idle}}">
+<path d="M186 150 L186 188" fill="none" stroke-width="5"></path>
+<rect x="186" y="170" width="66" height="14" rx="4" fill="#b5733d"></rect>
+<ellipse cx="202" cy="165" rx="10" ry="6" fill="#ffffff"></ellipse>
+<rect x="214" y="159" width="38" height="14" rx="5" fill="#d9534f"></rect>
+<path d="M190 184 L190 192 M248 184 L248 192" fill="none" stroke-width="3.5"></path>
+</g>
+<g display="{{d.empty}}">
+<path d="M222 190 C222 190 206 176 206 162 A16 16 0 0 1 238 162 C238 176 222 190 222 190 Z" fill="#c8562b"></path>
+<circle cx="222" cy="161" r="5.5" fill="#f2e3c6" stroke-width="2.5"></circle>
+</g>
+<ellipse cx="120" cy="412" rx="96" ry="10" fill="#163a47" stroke="none"></ellipse>
+<path d="M78 214 Q72 168 118 162 Q164 158 166 212 Q170 264 150 296 L90 296 Q72 262 78 214 Z" fill="#c8562b"></path>
+<path d="M110 256 L130 256 L132 274 L108 274 Z" fill="#f4c7a0"></path>
+<path d="M88 350 L152 350 L154 404 L126 404 L120 372 L114 404 L86 404 Z" fill="#5f9ea6"></path>
+<path d="M92 274 Q120 262 148 274 Q158 312 156 354 Q120 362 84 354 Q82 312 92 274 Z" fill="#7fb7be"></path>
+<path d="M94 284 Q78 318 84 346" fill="none" stroke="#7fb7be" stroke-width="15"></path>
+<circle cx="84" cy="349" r="8" fill="#f4c7a0"></circle>
+<path d="M146 284 Q170 302 144 266" fill="none" stroke="#7fb7be" stroke-width="15"></path>
+<path d="M84 410 Q84 398 102 400 Q114 404 112 414 Q98 418 84 410 Z" fill="#f4a259"></path>
+<path d="M128 414 Q126 404 138 400 Q156 398 156 410 Q142 418 128 414 Z" fill="#f4a259"></path>
+<circle cx="120" cy="212" r="44" fill="#f4c7a0"></circle>
+<path d="M76 206 Q80 162 120 162 Q162 162 166 204 Q146 184 120 194 Q98 182 76 206 Z" fill="#c8562b"></path>
+<ellipse cx="104" cy="216" rx="12" ry="14" fill="#ffffff"></ellipse>
+<ellipse cx="136" cy="216" rx="12" ry="14" fill="#ffffff"></ellipse>
+<path d="M112 244 Q120 250 128 243" fill="none" stroke-width="3"></path>
+<circle cx="144" cy="258" r="9" fill="#f4c7a0"></circle>
+<path d="M262 330 Q262 300 290 304 Q312 310 306 340 Q300 366 272 360 Q256 352 262 330 Z" fill="#f2e3c6"></path>
+<ellipse cx="278" cy="330" rx="7" ry="8" fill="#ffffff"></ellipse>
+<ellipse cx="294" cy="330" rx="7" ry="8" fill="#ffffff"></ellipse>
+<path d="M280 346 Q286 350 292 346" fill="none" stroke-width="3"></path>
+</g>
+<g display="{{d.loading}}">
+<circle cx="200" cy="166" r="8" fill="#1f4a5a"><animate attributeName="opacity" values="1;0.2;1" dur="1.2s" begin="0s" repeatCount="indefinite"></animate></circle>
+<circle cx="222" cy="166" r="8" fill="#1f4a5a"><animate attributeName="opacity" values="1;0.2;1" dur="1.2s" begin="0.2s" repeatCount="indefinite"></animate></circle>
+<circle cx="244" cy="166" r="8" fill="#1f4a5a"><animate attributeName="opacity" values="1;0.2;1" dur="1.2s" begin="0.4s" repeatCount="indefinite"></animate></circle>
+</g>
+<circle cx="109" cy="209" r="6" fill="{{c.ink}}"></circle>
+<circle cx="141" cy="209" r="6" fill="{{c.ink}}"></circle>
+<circle cx="111" cy="207" r="1.8" fill="#ffffff"></circle>
+<circle cx="143" cy="207" r="1.8" fill="#ffffff"></circle>
+<circle cx="280" cy="326" r="3.5" fill="{{c.ink}}"></circle>
+<circle cx="296" cy="326" r="3.5" fill="{{c.ink}}"></circle>
+<circle cx="94" cy="232" r="1.5" fill="#b8683f"></circle>
+<circle cx="99" cy="236" r="1.5" fill="#b8683f"></circle>
+<circle cx="141" cy="236" r="1.5" fill="#b8683f"></circle>
+<circle cx="146" cy="232" r="1.5" fill="#b8683f"></circle>
+<path d="M102 300 L138 300 M100 322 L140 322" stroke="#f2e3c6" stroke-width="5" stroke-linecap="round"></path>
+</g>
+
+<g display="{{d.result}}">
+<g clip-path="url(#panelclip)" display="{{d.dome}}">
+<path d="M10 252 Q80 236 160 244 Q240 252 316 238 L316 352 L10 352 Z" fill="#19404e"></path>
+<g transform="translate(160 212)">
+<animateTransform attributeName="transform" type="translate" values="350 212;160 212" keyTimes="0;1" keySplines="0.2 0 0.2 1" calcMode="spline" dur="1.8s" fill="freeze"></animateTransform>
+<g stroke="{{c.ink}}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+<g display="{{d.launcher}}" transform="translate(30 12) rotate(-60)">
+<rect x="0" y="-22" width="34" height="22" rx="3" fill="#8f9a5a"></rect>
+<circle cx="8" cy="-15" r="3" fill="#f2e3c6" stroke-width="1.8"></circle>
+<circle cx="17" cy="-15" r="3" fill="#f2e3c6" stroke-width="1.8"></circle>
+<circle cx="26" cy="-15" r="3" fill="#f2e3c6" stroke-width="1.8"></circle>
+<circle cx="8" cy="-7" r="3" fill="#f2e3c6" stroke-width="1.8"></circle>
+<circle cx="17" cy="-7" r="3" fill="#f2e3c6" stroke-width="1.8"></circle>
+<circle cx="26" cy="-7" r="3" fill="#f2e3c6" stroke-width="1.8"></circle>
+</g>
+<g display="{{d.radar}}">
+<path d="M38 12 L38 -8" fill="none"></path>
+<g transform="translate(38 -12)">
+<g>
+<animateTransform attributeName="transform" type="scale" values="1 1;0.12 1;-1 1;0.12 1;1 1" dur="2.4s" begin="1.8s" repeatCount="indefinite"></animateTransform>
+<path d="M-13 -3 Q0 11 13 -3 Z" fill="#f2e3c6"></path>
+<path d="M0 3 L4 -8" fill="none" stroke-width="2"></path>
+<circle cx="4" cy="-9" r="2" fill="#f4a259" stroke-width="1.5"></circle>
+</g>
+</g>
+</g>
+<rect x="0" y="12" width="62" height="14" rx="3" fill="#8f9a5a"></rect>
+<path d="M0 26 L0 8 Q0 2 -5 2 L-13 2 Q-19 2 -19 9 L-19 26 Z" fill="#8f9a5a"></path>
+<rect x="-15" y="6" width="9" height="7" rx="1.5" fill="#f2e3c6" stroke-width="1.8"></rect>
+<circle cx="-10" cy="28" r="6" fill="{{c.ink}}"></circle>
+<circle cx="10" cy="28" r="6" fill="{{c.ink}}"></circle>
+<circle cx="30" cy="28" r="6" fill="{{c.ink}}"></circle>
+<circle cx="50" cy="28" r="6" fill="{{c.ink}}"></circle>
+</g>
+<circle cx="-10" cy="28" r="2" fill="#f2e3c6"></circle>
+<circle cx="10" cy="28" r="2" fill="#f2e3c6"></circle>
+<circle cx="30" cy="28" r="2" fill="#f2e3c6"></circle>
+<circle cx="50" cy="28" r="2" fill="#f2e3c6"></circle>
+<g display="{{d.launcher}}">
+<circle cx="38" cy="-23" r="3" fill="#f2e3c6" opacity="0">
+<animate attributeName="r" values="3;12;12" keyTimes="0;0.12;1" dur="5s" begin="2.2s" repeatCount="indefinite"></animate>
+<animate attributeName="opacity" values="0.9;0;0" keyTimes="0;0.12;1" dur="5s" begin="2.2s" repeatCount="indefinite"></animate>
+</circle>
+<g opacity="0">
+<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.3;0.31;1" dur="5s" begin="2.2s" repeatCount="indefinite"></animate>
+<g>
+<animateTransform attributeName="transform" type="translate" values="38 -23;120 -300;120 -300" keyTimes="0;0.3;1" dur="5s" begin="2.2s" repeatCount="indefinite"></animateTransform>
+<g transform="rotate(14)" stroke="{{c.ink}}" stroke-width="1.8" stroke-linejoin="round">
+<path d="M-2.5 2 Q0 14 2.5 2 Z" fill="#f4a259" stroke="none"><animate attributeName="opacity" values="1;0.4;1" dur="0.16s" repeatCount="indefinite"></animate></path>
+<path d="M-3 -2 L-7 4 L-3 2 Z M3 -2 L7 4 L3 2 Z" fill="#c8562b"></path>
+<rect x="-3" y="-16" width="6" height="18" rx="3" fill="#ffffff"></rect>
+<path d="M-3 -14 Q0 -23 3 -14 Z" fill="#c8562b"></path>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g stroke="{{c.ink}}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="244" y="290" width="58" height="64" rx="4" fill="#b5733d"></rect>
+<path d="M252 322 L294 322" fill="none" stroke-width="2.5"></path>
+<circle cx="273" cy="338" r="3" fill="{{c.ink}}" stroke="none"></circle>
+<rect x="286" y="278" width="10" height="12" fill="#8c5a30"></rect>
+<path d="M280 278 L302 278 L296 254 L286 254 Z" fill="#f4a259"></path>
+<rect x="22" y="250" width="14" height="110" rx="4" fill="#b5733d"></rect>
+<rect x="30" y="350" width="8" height="18" fill="#8c5a30"></rect>
+<rect x="224" y="350" width="8" height="18" fill="#8c5a30"></rect>
+<rect x="22" y="340" width="218" height="14" rx="3" fill="#b5733d"></rect>
+<rect x="30" y="316" width="210" height="28" rx="7" fill="#f2e3c6"></rect>
+<path d="M40 306 Q40 288 70 288 Q112 288 114 306 Q114 324 76 324 Q40 324 40 306 Z" fill="#ffffff"></path>
+<path d="M66 294 Q44 296 42 312 Q44 318 60 318 L80 316 Z" fill="#c8562b"></path>
+<path d="M100 318 L100 302 Q110 298 118 296 Q128 288 138 291 Q146 294 150 298 Q158 300 164 300 L168 318 Z" fill="#7fb7be"></path>
+<path d="M156 318 Q154 294 178 290 Q214 286 234 298 Q242 308 240 318 Z" fill="#d9534f"></path>
+<path d="M190 296 Q204 304 220 298" fill="none" stroke-width="2.5"></path>
+<circle cx="80" cy="292" r="22" fill="#f4c7a0"></circle>
+<path d="M80 270 Q57 272 58 293 Q59 312 80 314 Q67 306 67 292 Q67 278 80 270 Z" fill="#c8562b"></path>
+<circle cx="71" cy="295" r="4.5" fill="#f4c7a0" stroke-width="2.4"></circle>
+<g display="{{d.high}}">
+<path d="M79 274 L89 277" fill="none" stroke-width="2.6"></path>
+<path d="M94 288 Q97.5 284.5 101 288" fill="none" stroke-width="2.4"></path>
+</g>
+<g display="{{d.medium}}">
+<ellipse cx="85" cy="281" rx="4.8" ry="5.8" fill="#ffffff" stroke-width="2"></ellipse>
+</g>
+<g display="{{d.low}}">
+<path d="M80 283 Q84 278 88 283" fill="none" stroke-width="2.6"></path>
+<path d="M93 285 Q97 290 101 284" fill="none" stroke-width="2.4"></path>
+</g>
+</g>
+<circle cx="90" cy="291" r="1.3" fill="#b8683f"></circle>
+<circle cx="93" cy="295" r="1.3" fill="#b8683f"></circle>
+
+<g display="{{d.high}}">
+<ellipse cx="85" cy="281" rx="4.8" ry="5.8" fill="#ffffff" stroke="{{c.ink}}" stroke-width="2"></ellipse>
+<circle cx="86" cy="280" r="2.6" fill="{{c.ink}}"></circle>
+<circle cx="86.8" cy="279" r="0.9" fill="#ffffff"></circle>
+<path d="M83 287 Q80 298 76 312" fill="none" stroke="#9ad8e8" stroke-width="3" stroke-linecap="round"></path>
+<path d="M108 305 Q110 298 118 296.5 Q128 289 138 292 Q145 294.5 148 299 L148 306 Q128 303 108 305 Z" fill="#5a979f"></path>
+<path d="M80.5 290 Q85 292.5 89.5 290 M82 293.3 Q85 294.9 88 293.3" fill="none" stroke="#b8683f" stroke-width="1.5" stroke-linecap="round"></path>
+</g>
+<path d="M148 301 L148 312" fill="none" stroke="#f2e3c6" stroke-width="5" stroke-linecap="round"></path>
+
+<g display="{{d.medium}}">
+<circle cx="97.5" cy="287" r="2.3" fill="{{c.ink}}"></circle>
+<circle cx="86.5" cy="280.2" r="2.3" fill="{{c.ink}}"></circle>
+<path d="M79 279.2 Q85 277.2 91 279.2 Q91 274 85 274 Q79 274 79 279.2 Z" fill="#f4c7a0"></path>
+<path d="M79.4 279.4 Q85 277.4 90.6 279.4" fill="none" stroke="{{c.ink}}" stroke-width="2.6" stroke-linecap="round"></path>
+<path d="M80.5 289.5 Q85 292 89.5 289.5 M82 292.8 Q85 294.4 88 292.8" fill="none" stroke="#b8683f" stroke-width="1.5" stroke-linecap="round"></path>
+<circle cx="104" cy="270" r="3.5" fill="#f2e3c6" stroke="{{c.ink}}" stroke-width="2"></circle>
+<circle cx="111" cy="255" r="5.5" fill="#f2e3c6" stroke="{{c.ink}}" stroke-width="2.2"></circle>
+<circle cx="121" cy="237" r="8.5" fill="#f2e3c6" stroke="{{c.ink}}" stroke-width="2.5"></circle>
+<g transform="translate(92 368) rotate(-6)" stroke="{{c.ink}}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+<path d="M2 2 Q4 -10 8 -12 M30 2 Q28 -10 24 -12" fill="none"></path>
+<path d="M0 2 Q0 14 10 14 Q15 14 16 7 Q17 14 22 14 Q32 14 32 2 Z" fill="#e8a0a0"></path>
+</g>
+<path d="M112 304 Q107 318 112 330" fill="none" stroke="{{c.ink}}" stroke-width="14" stroke-linecap="round"></path>
+<path d="M112 304 Q107 318 112 330" fill="none" stroke="#7fb7be" stroke-width="9" stroke-linecap="round"></path>
+<circle cx="113" cy="335" r="6" fill="#f4c7a0" stroke="{{c.ink}}" stroke-width="2.4"></circle>
+</g>
+
+<g display="{{d.low}}">
+<text x="126" y="262" fill="#f2e3c6" font-family="Rubik Mono One, sans-serif" font-size="14">z</text>
+<text x="138" y="246" fill="#f2e3c6" font-family="Rubik Mono One, sans-serif" font-size="18">z</text>
+<text x="154" y="226" fill="#f2e3c6" font-family="Rubik Mono One, sans-serif" font-size="22">Z</text>
+<path d="M170 282 Q190 200 214 176" fill="none" stroke="#f2e3c6" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6"></path>
+<g transform="translate(212 150) rotate(-28)" stroke="{{c.ink}}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
+<path d="M2 2 Q4 -12 8 -15 M34 2 Q32 -12 28 -15" fill="none"></path>
+<path d="M0 2 Q0 16 11 16 Q17 16 18 8 Q19 16 25 16 Q36 16 36 2 Z" fill="#e8a0a0"></path>
+</g>
+<path d="M258 150 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3 Z" fill="#f4a259"></path>
+<path d="M196 116 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 Z" fill="#f4a259"></path>
+</g>
+</g>
+
+<g display="{{d.hiB}}">
+<g stroke="{{c.ink}}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="24" y="300" width="60" height="56" rx="4" fill="#b5733d"></rect>
+<path d="M32 326 L76 326" fill="none" stroke-width="2.5"></path>
+<rect x="32" y="274" width="18" height="28" rx="3" fill="#163a47"></rect>
+<rect x="36" y="278" width="10" height="17" rx="1.5" fill="#ffe29a" stroke-width="1.5"></rect>
+<rect x="56" y="288" width="22" height="12" rx="3" fill="#9aa4ad"></rect>
+<rect x="96" y="98" width="190" height="316" rx="8" fill="#b5733d"></rect>
+<rect x="96" y="98" width="190" height="24" rx="8" fill="#8c5a30"></rect>
+<rect x="106" y="122" width="170" height="284" rx="6" fill="#f2e3c6"></rect>
+<rect x="116" y="130" width="150" height="58" rx="24" fill="#ffffff"></rect>
+<ellipse cx="191" cy="160" rx="42" ry="30" fill="#c8562b"></ellipse>
+<rect x="143" y="198" width="15" height="72" rx="7.5" fill="#7fb7be"></rect>
+<rect x="224" y="198" width="15" height="72" rx="7.5" fill="#7fb7be"></rect>
+<rect x="156" y="190" width="70" height="86" rx="20" fill="#7fb7be"></rect>
+<path d="M134 266 Q191 252 248 266 L250 394 Q191 402 132 394 Z" fill="#d9534f"></path>
+<path d="M150 300 Q191 292 232 300 M148 340 Q191 332 234 340" fill="none" stroke-width="2.5"></path>
+<circle cx="150.5" cy="272" r="8" fill="#f4c7a0"></circle>
+<circle cx="231.5" cy="272" r="8" fill="#f4c7a0"></circle>
+<path d="M160 394 Q160 380 175 380 Q190 382 188 404 Q174 412 160 404 Z" fill="#f4a259"></path>
+<path d="M222 394 Q222 380 207 380 Q192 382 194 404 Q208 412 222 404 Z" fill="#f4a259"></path>
+<circle cx="191" cy="166" r="28" fill="#f4c7a0"></circle>
+<path d="M163 160 Q168 136 191 136 Q214 136 219 160 Q204 148 191 152 Q178 148 163 160 Z" fill="#c8562b"></path>
+<circle cx="181" cy="167" r="8" fill="#ffffff" stroke-width="2.5"></circle>
+<circle cx="201" cy="167" r="8" fill="#ffffff" stroke-width="2.5"></circle>
+<path d="M184 186 Q191 181 198 186" fill="none" stroke-width="2.6"></path>
+</g>
+<circle cx="181" cy="167" r="2.6" fill="{{c.ink}}"></circle>
+<circle cx="201" cy="167" r="2.6" fill="{{c.ink}}"></circle>
+<path d="M172 173 Q165 185 167 197 M210 173 Q217 185 215 197" fill="none" stroke="#9ad8e8" stroke-width="4" stroke-linecap="round"></path>
+<ellipse cx="158" cy="184" rx="10" ry="4" fill="#9ad8e8"></ellipse>
+<ellipse cx="224" cy="184" rx="10" ry="4" fill="#9ad8e8"></ellipse>
+<circle cx="128" cy="150" r="2.6" fill="{{c.ink}}"></circle>
+<circle cx="136" cy="150" r="2.6" fill="{{c.ink}}"></circle>
+<path d="M127 160 Q132 156 137 160" fill="none" stroke="{{c.ink}}" stroke-width="2" stroke-linecap="round"></path>
+<path d="M172 194 L174 228 M210 194 L208 228 M160 232 Q191 238 222 232" fill="none" stroke="{{c.ink}}" stroke-width="2.2" stroke-dasharray="4 3" stroke-linecap="round" opacity="0.8"></path>
+<path d="M166 400 L184 402 M198 402 L216 400" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"></path>
+</g>
+
+<g display="{{d.hiC}}">
+<g stroke="{{c.ink}}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M20 300 Q20 250 80 246 L260 246 Q310 250 310 300 L310 360 Q308 404 260 406 L70 406 Q20 402 20 360 Z" fill="#ffffff"></path>
+<path d="M40 244 Q56 196 120 198 Q192 204 200 262 Q204 320 170 340 L70 340 Q30 320 40 244 Z" fill="#c8562b"></path>
+<path d="M150 318 Q210 296 316 306 L316 432 L150 432 Z" fill="#7fb7be"></path>
+<path d="M118 356 Q200 332 316 346 L316 432 L108 432 Z" fill="#d9534f"></path>
+<circle cx="120" cy="286" r="66" fill="#f4c7a0"></circle>
+<path d="M56 264 Q64 214 120 214 Q178 214 186 264 Q160 240 132 250 Q104 236 56 264 Z" fill="#c8562b"></path>
+<ellipse cx="96" cy="288" rx="15" ry="18" fill="#ffffff"></ellipse>
+<ellipse cx="146" cy="288" rx="15" ry="18" fill="#ffffff"></ellipse>
+<path d="M80 272 L106 264 M136 264 L162 272" fill="none"></path>
+<path d="M106 330 Q121 320 136 330" fill="none"></path>
+<circle cx="204" cy="350" r="12" fill="#f4c7a0"></circle>
+<path d="M196 148 Q186 118 214 108 Q228 84 256 92 Q286 84 296 110 Q312 130 296 150 Q290 174 262 170 Q240 184 220 170 Q194 172 196 148 Z" fill="#f2e3c6"></path>
+<circle cx="190" cy="190" r="7" fill="#f2e3c6"></circle>
+<circle cx="180" cy="208" r="4.5" fill="#f2e3c6"></circle>
+<rect x="238" y="104" width="34" height="56" rx="3" fill="#5f9ea6"></rect>
+<ellipse cx="62" cy="378" rx="32" ry="8" fill="#9ad8e8" stroke-width="2.5"></ellipse>
+</g>
+<circle cx="264" cy="134" r="2.5" fill="{{c.ink}}"></circle>
+<path d="M214 132 L232 132 M226 126 L232 132 L226 138" fill="none" stroke="{{c.ink}}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+<circle cx="98" cy="294" r="5.5" fill="{{c.ink}}"></circle>
+<circle cx="148" cy="294" r="5.5" fill="{{c.ink}}"></circle>
+<path d="M84 304 Q68 330 64 370 M158 304 Q162 318 156 334" fill="none" stroke="#9ad8e8" stroke-width="6" stroke-linecap="round"></path>
+<path d="M190 312 Q214 330 228 358" fill="none" stroke="{{c.ink}}" stroke-width="2.4" stroke-dasharray="5 4" stroke-linecap="round" opacity="0.8"></path>
+</g>
+
+<g display="{{d.news}}">
+<g>
+<animateTransform attributeName="transform" type="translate" values="0 0;2 -5;0 -2;-1 -6;0 0" dur="3.4s" repeatCount="indefinite"></animateTransform>
+<path d="M28 134 L100 134 Q110 134 110 144 L110 162 Q110 172 100 172 L40 172 L14 184 L26 170 Q20 168 20 160 L20 144 Q20 134 28 134 Z" fill="#e8f5ff" stroke="{{c.ink}}" stroke-width="3" stroke-linejoin="round"></path>
+<text x="65" y="159" text-anchor="middle" fill="#1f4a5a" font-family="Rubik, sans-serif" font-size="15" font-weight="800">בלה בלה…<animateTransform attributeName="transform" type="rotate" values="-3 65 154;3 65 154;-3 65 154" dur="1.4s" repeatCount="indefinite"></animateTransform></text>
+</g>
+</g>
+</svg>
+</sc-if>
+</div>
+
+<sc-if value="{{showButton}}" hint-placeholder-val="{{ true }}">
+<button disabled="{{btnDisabled}}" style="width: 100%; height: 62px; display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 16px; border: 3.5px solid {{c.btnBorder}}; background: {{c.btnBg}}; color: {{c.btnText}}; font-family: 'Rubik', sans-serif; font-size: 24px; font-weight: 900; box-shadow: 0 5px 0 {{c.btnShadow}}; opacity: {{btnOpacity}};">
+<sc-if value="{{isLoading}}" hint-placeholder-val="{{ false }}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{c.btnText}}" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 1-9 9"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.9s" repeatCount="indefinite"></animateTransform></path></svg>
+</sc-if>
+<span>{{btnLabel}}</span>
+</button>
+</sc-if>
+<sc-if value="{{isResult}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="width: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 16px; border: 3.5px solid {{c.btnBorder}}; background: {{c.cardBg}}; color: {{c.cardText}}; box-shadow: 0 5px 0 {{c.btnShadow}};">
+<div dir="ltr" style="font-family: 'Rubik Mono One', sans-serif; font-size: 46px; line-height: 1; color: {{risk.color}}; flex-shrink: 0;">{{risk.n}}</div>
+<div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+<div style="font-size: 12px; font-weight: 800; color: {{risk.color}};">רמת סיכון · {{risk.label}}</div>
+<div style="font-size: 17px; font-weight: 900; line-height: 1.15;">{{risk.title}}</div>
+<div style="font-size: 12px; font-weight: 500; line-height: 1.3; color: {{c.cardMuted}};">{{risk.why}}</div>
+</div>
+<button aria-label="בדיקה חוזרת" style="width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 22px; border: 2.5px solid {{c.btnBorder}}; background: {{c.btnBg}}; color: {{c.btnText}};">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{c.btnText}}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"></path><path d="M20 4v5h-5"></path></svg>
+</button>
+</div>
+</sc-if>
+<button type="button" role="switch" aria-checked="{{sw.checked}}" disabled="{{sw.disabled}}" onClick="{{toggleNews}}" style="min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 0 8px; border: none; background: transparent; color: {{c.label}}; font-family: 'Rubik', sans-serif; font-size: 15px; font-weight: 800; opacity: {{sw.opacity}}; cursor: {{sw.cursor}};">
+<span>להתחשב גם בחדשות</span>
+<span aria-hidden="true" style="width: 54px; height: 32px; box-sizing: border-box; display: flex; align-items: center; justify-content: {{sw.justify}}; padding: 0 3px; border-radius: 16px; border: 2.5px solid {{c.btnBorder}}; background: {{sw.track}}; box-shadow: 0 3px 0 {{c.btnShadow}}; transition: background 0.2s;">
+<span style="width: 22px; height: 22px; box-sizing: border-box; border-radius: 11px; border: 2.5px solid {{c.btnBorder}}; background: {{sw.knob}};"></span>
+</span>
+</button>
+<p style="margin: 0; text-align: center; font-size: 13px; font-weight: 500; line-height: 1.4; color: {{c.disc}};">האתר נועד לכיף ואין להתייחס להערכתו כהנחיית בטיחות. יש להישמע להנחיות פיקוד העורף.</p>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"step":{"editor":"enum","options":["empty","searchfirst","search","idle","loading","high","medium","low"],"default":"idle"},"variant":{"editor":"enum","options":["a","b","c"],"default":"a"},"news":{"editor":"enum","options":["off","on"],"default":"off"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+  const theme = this.props.theme === 'dark' ? 'dark' : 'light';
+  const step = this.props.step || 'idle';
+  const variant = this.props.variant || 'a';
+  const emptyLike = step === 'empty' || step === 'searchfirst';
+  const st = this.state || {};
+  const news = emptyLike ? false : (st.news !== undefined ? st.news : this.props.news === 'on');
+  const P = {
+    light: { frame:'#c8562b', body:'#f2e3c6', wave:'#f4a259', ui:'#3b2418', chipBg:'#ffffff', chipText:'#3b2418', pin:'#c8562b', langBg:'#1f4a5a', langText:'#f2e3c6', langBorder:'#3b2418', title:'#c8562b', sub:'#1f4a5a', btnBg:'#1f4a5a', btnText:'#f2e3c6', btnBorder:'#3b2418', btnShadow:'#3b2418', label:'#3b2418', disc:'#3b2418', panelStroke:'#3b2418', ink:'#3b2418', cardBg:'#ffffff', cardText:'#3b2418', cardMuted:'#5c4232', accent:'#c8562b', high:'#b8401c', med:'#9a5a1e', low:'#1f6a5a', hl:'#f7ecd9', divider:'#e6d6b8', hlText:'#9c3f1c', pillBg:'#1f4a5a', pillText:'#ffffff', focus:'#c8562b', ring:'rgba(200,86,43,0.25)' },
+    dark: { frame:'#8f3a1c', body:'#211a16', wave:'#8a4a26', ui:'#f2e3c6', chipBg:'#2e2520', chipText:'#f2e3c6', pin:'#f4a259', langBg:'#1f4a5a', langText:'#f2e3c6', langBorder:'#f2e3c6', title:'#e8743f', sub:'#7fb7be', btnBg:'#f4a259', btnText:'#211a16', btnBorder:'#120c09', btnShadow:'#120c09', label:'#f2e3c6', disc:'#d9c9a8', panelStroke:'#8a4a26', ink:'#120c09', cardBg:'#2e2520', cardText:'#f2e3c6', cardMuted:'#d9c9a8', accent:'#f4a259', high:'#ff8a5c', med:'#f4c06a', low:'#8fd3d0', hl:'#3d3129', divider:'#4a3d35', hlText:'#f4a259', pillBg:'#f4a259', pillText:'#211a16', focus:'#f4a259', ring:'rgba(244,162,89,0.28)' }
+  };
+  const c = P[theme];
+  const SW = { light: { off:'#d9c9a8', on:'#c8562b', knob:'#ffffff' }, dark: { off:'#4a3d35', on:'#f4a259', knob:'#f2e3c6' } }[theme];
+  const swDisabled = emptyLike;
+  const sw = {
+    checked: news ? 'true' : 'false', disabled: swDisabled,
+    opacity: swDisabled ? '0.45' : '1', cursor: swDisabled ? 'not-allowed' : 'pointer',
+    justify: news ? 'flex-end' : 'flex-start', track: news ? SW.on : SW.off, knob: SW.knob
+  };
+  const toggleNews = () => { if (!swDisabled) this.setState({ news: !news }); };
+  const R = {
+    high: { n:'82', label:'גבוהה', title:'הלילה נשארים עם חזייה', why:'4 אזעקות באזור שלך ב-24 השעות האחרונות', color:c.high },
+    medium: { n:'47', label:'בינונית', title:'אפשר להוריד, רק להשאיר קרוב', why:'שקט ביממה האחרונה, 2 אזעקות השבוע', color:c.med },
+    low: { n:'9', label:'נמוכה', title:'משחררים! לילה טוב', why:'אין אזעקות באזור שלך כבר 7 ימים', color:c.low }
+  };
+  const risk = R[step] || null;
+  const isSearch = step === 'search' || step === 'searchfirst';
+  const standing = step === 'empty' || step === 'idle' || step === 'loading' || isSearch;
+  const search = {
+    value: isSearch ? 'צליה' : '',
+    border: isSearch ? '3px solid ' + c.focus : '2.5px solid ' + c.ui,
+    ring: isSearch ? '0 0 0 4px ' + c.ring : 'none'
+  };
+  const suggestions = [
+    { pre:'הר', match:'צליה', post:'', best:true },
+    { pre:'הר', match:'צליה', post:' - מערב', best:false },
+    { pre:'הר', match:'צליה', post:' - מרכז וגליל ים', best:false }
+  ].map((s, i) => ({ ...s, selected: i === 0 ? 'true' : 'false', bg: i === 0 ? c.hl : 'transparent' }));
+  const show = (b) => (b ? 'inline' : 'none');
+  const side = (x1, y1, x2, y2, nx, ny) => {
+    const len = Math.hypot(x2 - x1, y2 - y1);
+    const n = Math.max(2, Math.round(len / 14));
+    let s = '';
+    for (let i = 0; i < n; i++) {
+      const t1 = (i + 1) / n, tm = (i + 0.5) / n;
+      const a = (i % 2 ? 4 : -4);
+      const mx = x1 + (x2 - x1) * tm + nx * a, my = y1 + (y2 - y1) * tm + ny * a;
+      const ex = x1 + (x2 - x1) * t1, ey = y1 + (y2 - y1) * t1;
+      s += ' Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + ex.toFixed(1) + ' ' + ey.toFixed(1);
+    }
+    return s;
+  };
+  const m = 24, W = 390, H = 844;
+  const wave = 'M' + m + ' ' + m + side(m, m, W - m, m, 0, 1) + side(W - m, m, W - m, H - m, 1, 0) + side(W - m, H - m, m, H - m, 0, 1) + side(m, H - m, m, m, 1, 0) + ' Z';
+  const labels = { searchfirst:'נא לבחור מיקום', search:'בחורה בפיג׳מה חושבת על המיטה', empty:'בחורה בפיג׳מה חושבת איפה היא ישנה הלילה', idle:'בחורה בפיג׳מה חושבת על המיטה', loading:'בחורה בפיג׳מה חושבת, הבדיקה רצה', high:'הבחורה שוכבת במיטה ובוכה, עם חזייה מתחת לפיג׳מה', medium:'הבחורה שוכבת במיטה ונושמת לרווחה, החזייה על השידה', low:'הבחורה ישנה מחויכת, החזייה עפה באוויר' };
+  return {
+    c, wave, risk: risk || {}, news, sw, toggleNews,
+    hasLocation: !emptyLike, isEmpty: emptyLike, isLoading: step === 'loading',
+    isSearch, search, suggestions,
+    showChip: !emptyLike && !isSearch, showSearch: emptyLike || isSearch,
+    isResult: !!risk, showButton: !risk,
+    btnDisabled: emptyLike || step === 'loading',
+    btnOpacity: emptyLike ? '0.45' : '1',
+    btnLabel: step === 'loading' ? 'בודקים את הלילה…' : 'אפשר לשחרר הלילה?',
+    sceneLabel: labels[step] || labels.idle,
+    d: {
+      standing: show(standing), result: show(!!risk && !(step === 'high' && variant !== 'a')), hiB: show(step === 'high' && variant === 'b'), hiC: show(step === 'high' && variant === 'c'), dome: show(step === 'medium' || step === 'high'), radar: show(step === 'medium'), launcher: show(step === 'high'), idle: show(step === 'idle' || isSearch), empty: show(step === 'empty'), loading: show(step === 'loading'),
+      high: show(step === 'high'), notHigh: show(step !== 'high'), medium: show(step === 'medium'), low: show(step === 'low'), notLow: show(step !== 'low'), moonWorried: show(step === 'high' || step === 'medium'), moonSmile: show(step !== 'high' && step !== 'medium'), news: show(news)
+    }
+  };
+}
+}
+</script>
+</body>
+</html>
