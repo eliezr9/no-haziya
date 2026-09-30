@@ -23,11 +23,10 @@ screenshots) for review before starting the next. Details live in SPEC.md and de
 
 ## Decided
 - **Active alert:** no special mode and no safety instructions; show the regular statistics-based answer (SPEC §6).
+- **No data / couldn't check:** the scene keeps the idle standing girl.
 
 ## Open decisions
 - **Very old data:** today a stale file still shows its last score plus "updated X ago". Should the
   verdict be hidden after some age (e.g. 6 hours, when the Pi is clearly down)?
-- **Scene for "no data" / "couldn't check"**: for now the girl keeps standing (idle pose). OK, or a
-  dedicated pose?
 - How the Pi uploads `scores.json` to the host (git push / Cloudflare R2 / KV).
 - LLM provider for news (or drop news in v1); animation tool (SVG vs Rive).
