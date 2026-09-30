@@ -17,7 +17,7 @@ Read them before UI work; don't copy them here.
   (`steps()` / short ease-out for the South Park cutout feel) + Web Animations API for sequences.
   Existing SMIL loops in `Screen.dc.html` may be copied as-is.
 - **Vitest** for pure logic (search, score lookup, state machine).
-- **Cloudflare Pages** (free `*.pages.dev`, auto-deploy on push); GitHub Pages as fallback.
+- **Cloudflare Pages** — live at https://no-haziya.pages.dev, auto-deploys on every push to `main`.
 
 Why: one screen + a small state machine doesn't need React. Zero-runtime output keeps the bundle tiny
 for phones, inline SVG lets every part animate independently, and Vite gives TS + a static `dist/` free.

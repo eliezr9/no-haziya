@@ -111,6 +111,6 @@ Rules:
 
 - [ ] Confirm current Pikud HaOref endpoints (alert history, policy levels, localities list) and their geo-blocking.
 - [ ] Real sub-area names for large cities (placeholders in the design).
-- [ ] Choose final host and subdomain.
+- [x] Choose final host and subdomain → Cloudflare Pages, `no-haziya.pages.dev`.
 - [ ] Choose LLM provider for the news rating (free tier) — or ship v1 without the news toggle.
 - [ ] Final character art + animation tool (SVG/CSS vs Rive).
