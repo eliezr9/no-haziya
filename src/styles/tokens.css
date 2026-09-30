@@ -1,4 +1,5 @@
-/* Design tokens — SPEC.md §3. The only place raw colors may appear. */
+/* Design tokens — SPEC.md §3, plus the UI colors from design/Screen.dc.html (P.light / P.dark).
+   The only place raw colors may appear. */
 :root {
   --frame: #c8562b;
   --body: #f2e3c6;
@@ -12,6 +13,30 @@
   --risk-high: #b8401c;
   --risk-med: #9a5a1e;
   --risk-low: #1f6a5a;
+
+  /* UI (design file) */
+  --text: #3b2418;
+  --text-muted: #3b2418;
+  --ui: #3b2418;
+  --chip-bg: #ffffff;
+  --chip-text: #3b2418;
+  --pin: #c8562b;
+  --lang-bg: #1f4a5a;
+  --lang-text: #f2e3c6;
+  --lang-border: #3b2418;
+  --btn-shadow: #3b2418;
+  --panel-stroke: #3b2418;
+  --hl: #f7ecd9;
+  --hl-text: #9c3f1c;
+  --divider: #e6d6b8;
+  --pill-bg: #1f4a5a;
+  --pill-text: #ffffff;
+  --focus: #c8562b;
+  --ring: rgba(200, 86, 43, 0.25);
+
+  /* Scene panel (same in both themes) */
+  --scene-text: #f2e3c6;
+  --scene-shadow: #163a47;
 
   /* Character palette (same in both themes) */
   --skin: #f4c7a0;
@@ -40,5 +65,22 @@
     --risk-high: #ff8a5c;
     --risk-med: #f4c06a;
     --risk-low: #8fd3d0;
+
+    --text: #f2e3c6;
+    --text-muted: #d9c9a8;
+    --ui: #f2e3c6;
+    --chip-bg: #2e2520;
+    --chip-text: #f2e3c6;
+    --pin: #f4a259;
+    --lang-border: #f2e3c6;
+    --btn-shadow: #120c09;
+    --panel-stroke: #8a4a26;
+    --hl: #3d3129;
+    --hl-text: #f4a259;
+    --divider: #4a3d35;
+    --pill-bg: #f4a259;
+    --pill-text: #211a16;
+    --focus: #f4a259;
+    --ring: rgba(244, 162, 89, 0.28);
   }
 }

@@ -1,0 +1,182 @@
+/* Header row, location chip, search combobox and dropdown — design/Screen.dc.html lines 21–54. */
+
+.topbar {
+  position: relative;
+  inline-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.chip,
+.lang {
+  height: 44px;
+  border-radius: 22px;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.chip {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border: 2.5px solid var(--ui);
+  background: var(--chip-bg);
+  color: var(--chip-text);
+}
+
+.chip svg,
+.search svg,
+.dropdown svg {
+  flex-shrink: 0;
+  color: var(--pin);
+}
+
+.chip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lang {
+  flex-shrink: 0;
+  min-width: 44px;
+  padding: 0 12px;
+  border: 2.5px solid var(--lang-border);
+  background: var(--lang-bg);
+  color: var(--lang-text);
+}
+
+.search {
+  flex-grow: 1;
+  min-width: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border-radius: 22px;
+  border: 2.5px solid var(--ui);
+  background: var(--chip-bg);
+  color: var(--chip-text);
+}
+
+.search:focus-within {
+  border: 3px solid var(--focus);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.search input {
+  flex-grow: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  /* 16px, not the design's 14px: smaller inputs make iOS Safari zoom the page on focus */
+  font-size: 1rem;
+}
+
+.search input::placeholder {
+  color: var(--chip-text);
+  opacity: 0.65;
+}
+
+.dropdown {
+  position: absolute;
+  top: 54px;
+  inset-inline: 0;
+  z-index: 5;
+  max-block-size: min(60dvh, 420px);
+  overflow-y: auto;
+  padding: 6px;
+  border-radius: 18px;
+  border: 2.5px solid var(--ui);
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  box-shadow: 0 5px 0 var(--btn-shadow);
+}
+
+.dropdown-message {
+  margin: 0;
+  padding: 12px;
+  font-size: 0.9375rem;
+}
+
+.dropdown ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown [role='option'] {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.dropdown [role='option'][aria-selected='true'] {
+  background: var(--hl);
+}
+
+.option-name {
+  flex-grow: 1;
+}
+
+.option-name mark {
+  background: none;
+  color: var(--hl-text);
+  font-weight: 900;
+}
+
+.pill {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: var(--pill-bg);
+  color: var(--pill-text);
+  font-size: 0.6875rem;
+  font-weight: 800;
+}
+
+/* GPS option sits under a divider, like the design */
+.dropdown .gps {
+  position: relative;
+  margin-block-start: 8px;
+  font-size: 0.9375rem;
+  font-weight: 800;
+}
+
+.dropdown .gps::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  inset-inline: 8px;
+  height: 2px;
+  background: var(--divider);
+}
+
+@media (hover: hover) {
+  .chip:hover,
+  .lang:hover {
+    filter: brightness(0.95);
+  }
+
+  .dropdown [role='option']:hover {
+    background: var(--hl);
+  }
+}

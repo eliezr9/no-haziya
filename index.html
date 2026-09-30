@@ -6,12 +6,61 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#c8562b" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#8f3a1c" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>NO-HAZIYA</title>
   </head>
   <body>
     <main id="app" class="poster">
-      <h1 class="title" data-i18n="title"></h1>
+      <header class="topbar">
+        <button type="button" id="loc-chip" class="chip" hidden>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.5" /></svg>
+          <span id="loc-chip-name" class="chip-name"></span>
+        </button>
+
+        <label id="loc-search-box" class="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+          <span class="visually-hidden" data-i18n="searchLabel"></span>
+          <input
+            id="loc-search"
+            type="text"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-controls="loc-listbox"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            enterkeyhint="search"
+            data-i18n-placeholder="searchPlaceholder"
+          />
+        </label>
+
+        <button type="button" id="lang-toggle" class="lang"></button>
+
+        <div id="loc-dropdown" class="dropdown" hidden>
+          <p id="loc-message" class="dropdown-message" hidden></p>
+          <ul id="loc-listbox" role="listbox" data-i18n-aria-label="suggestionsLabel"></ul>
+        </div>
+
+        <p id="loc-status" class="visually-hidden" role="status"></p>
+      </header>
+
+      <h1 class="title" dir="ltr" data-i18n="title"></h1>
       <p class="subtitle" data-i18n="subtitle"></p>
+
+      <div class="scene">
+        <label for="loc-search" id="pin-panel" class="panel pin-panel">
+          <svg width="84" height="104" viewBox="0 0 84 104" aria-hidden="true">
+            <ellipse cx="42" cy="98" rx="22" ry="5" class="pin-shadow" />
+            <path d="M42 96 C42 96 6 64 6 38 A36 36 0 0 1 78 38 C78 64 42 96 42 96 Z" class="pin-body" />
+            <circle cx="42" cy="37" r="13" class="pin-dot" />
+          </svg>
+          <span data-i18n="chooseLocation"></span>
+        </label>
+        <!-- Illustration comes in a later step. -->
+        <div id="scene-panel" class="panel" hidden></div>
+      </div>
+
       <p class="disclaimer" data-i18n="disclaimer"></p>
     </main>
     <script type="module" src="/src/main.ts"></script>

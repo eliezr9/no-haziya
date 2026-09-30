@@ -11,19 +11,43 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
+  padding: 14px;
   background: var(--frame);
-  color: var(--ink);
+  color: var(--text);
   font-family: var(--font-ui);
+  font-weight: 500;
   line-height: 1.4;
 }
 
-/* Mobile-first: full-bleed poster on phones, centered card on wider screens. */
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Mobile-first: poster fills the phone inside the rust frame; centered card on wider screens. */
 .poster {
-  min-height: 100dvh;
-  padding-block: 24px;
-  padding-inline: 16px;
+  min-height: calc(100dvh - 28px);
+  padding-block: 20px 24px;
+  padding-inline: 18px;
+  border-radius: 6px;
   background: var(--body);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 @media (min-width: 480px) {
@@ -37,28 +61,76 @@ body {
     min-height: auto;
     inline-size: 100%;
     max-inline-size: 420px;
-    border-radius: 24px;
   }
 }
 
 .title {
-  margin: 0;
+  margin: 6px 0 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2rem, 11vw, 2.75rem);
+  font-size: clamp(2rem, 10.5vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -1px;
   color: var(--title);
+  text-align: center;
 }
 
 .subtitle {
-  margin-block: 4px 0;
-  font-size: 1.125rem;
-  font-weight: 700;
+  margin: 0;
+  font-size: 1.3125rem;
+  font-weight: 900;
+  line-height: 1.2;
   color: var(--subtitle);
+  text-align: center;
+}
+
+.scene {
+  inline-size: 100%;
+  max-inline-size: 304px;
+}
+
+.panel {
+  inline-size: 100%;
+  aspect-ratio: 304 / 410;
+  border-radius: 22px;
+  border: 3.5px solid var(--panel-stroke);
+  background: var(--scene);
+}
+
+.pin-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: var(--scene-text);
+  font-size: 1.5rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.pin-shadow {
+  fill: var(--scene-shadow);
+}
+
+.pin-body {
+  fill: var(--hair);
+  stroke: var(--ink);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.pin-dot {
+  fill: var(--scene-text);
+  stroke: var(--ink);
+  stroke-width: 3.5;
 }
 
 .disclaimer {
-  margin-block-start: 24px;
+  margin: 14px 0 0;
   font-size: 0.8125rem;
+  color: var(--text-muted);
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: reduce) {

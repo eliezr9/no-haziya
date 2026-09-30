@@ -24,14 +24,16 @@ for phones, inline SVG lets every part animate independently, and Vite gives TS 
 
 ## Folder structure
     design/          reference only — never shipped or imported
-    public/          fonts, localities.json, sample scores.json
+    public/          localities.json (generated: `npm run data:localities`), sample scores.json
+    scripts/         data build scripts (credit sources in THIRD_PARTY_NOTICES.md)
     src/
       main.ts        entry, wires state → DOM
-      state.ts       screen state machine (empty/searchfirst/idle/search/loading/high/medium/low)
+      state.ts       app store (lang, location); screen steps come with the scene
+      header.ts      location chip / search combobox + language toggle
       i18n/          he.ts, en.ts — all user-facing strings
       search/        name normalization + fuzzy matching
       scene/         SVG parts and per-state animations
-      styles/        tokens.css (SPEC §3 tokens), base.css
+      styles/        tokens.css (SPEC §3 + design UI colors), base.css, one file per component
     tests/           Vitest specs
     fetcher/         Raspberry Pi job that builds scores.json (not part of the site bundle)
 
